@@ -5,15 +5,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    environment:
-      NODE_ENV: production
-      PORT: 8080
-      #WATCHPACK_POLLING: true
-
     ports:
       - "8080:8080"
     volumes:
       - ./frontend/src:/app/src
+    networks:
+      - T-WEB
 
   backend:
     container_name: backend
@@ -24,15 +21,36 @@ services:
       - "3000:3000"
     volumes:
       - ./backend/src:/app/src
+    networks:
+      - T-WEB
 
-  # mysql:
-  #   image: mariadb:10.3
-  #   container_name: mariadb
-  #   volumes:
-  #     - container-volume:/var/lib/mysql
-  #     - ./SQL/EpicRoadTrip.sql:/docker-entrypoint-initdb.d/EpicRoadTrip.sql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE: EpicRoadTrip
-  #   ports:
-  #     - "3306:3306"
+  mysql:
+    image: mariadb:10.3
+    container_name: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql/data
+      - ./SQL/EpicRoadTrip.sql:/docker-entrypoint-initdb.d/EpicRoadTrip.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: EpicRoadTrip
+    ports:
+      - "3306:3306"
+    networks:
+      - T-WEB
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - T-WEB
+
+networks:
+  T-WEB:
+    name: T-WEB
+
+volumes:
+  mariadb:

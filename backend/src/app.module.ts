@@ -9,8 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 8889,
+      host: 'mysql',
+      port: 3306,
       username: 'root',
       password: 'root',
       database: 'EpicRoadTrip',
