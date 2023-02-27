@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+:root {
+  --background-color: #edf2f7;
+  --background-section: white;
+  --backgroung-object: blue;
+}
+[data-theme="light"] {
+  --background-color: #edf2f7;
+  --background-section: white;
+  --background-header: white;
+  --backgroung-object: blue;
+  --color-text-1: black;
+  --background-table: white;
+  --background-border: #e4e4e4;
+  --background-table-content: rgba(255, 255, 255, 0.685);
+  --color-text-btn: white;
+  --background-color-csv: #3f51b5;
+  --background-color-csv-hover: #2f3c88;
+  --background-color-success: #aed581;
+  --background-color-success-hover: #9ccc65;
+  --background-table-text: black;
+  --color-ligne-1: #4b4b4b;
+  --color-highlight: rgb(62, 78, 170, 0.12);
+  --color-text-2: #3f51b5;
+  --color-content: #3f51b5;
+  --background-panel: white;
+  --background-switch: rgba(0, 0, 0, 0.38);
+  --color-link: #0d6efd;
+}
+
+[data-theme="dark"] {
+  --background-color: #494f6c;
+  --background-section: #1b1e2b;
+  --background-header: #1d202b;
+  --backgroung-object: blue;
+  --color-text-1: white;
+  --background-table: rgba(0, 0, 0);
+  --background-border: #1b1b1b;
+  --background-table-content: rgba(29, 32, 43, 0.51);
+  --color-text-btn: white;
+  --background-color-csv: #3f51b5;
+  --background-color-csv-hover: #2f3c88;
+  --background-color-success: #aed581;
+  --background-color-success-hover: #9ccc65;
+  --background-table-text: white;
+  --color-ligne-1: #b4b4b4;
+  --color-highlight: rgb(192, 174, 74, 0.12);
+  --color-text-2: #c0ae4a;
+  --color-content: #c0ae4a;
+  --background-panel: black;
+  --background-switch: whitesmoke;
+  --color-link: #fdee0d;
+}
