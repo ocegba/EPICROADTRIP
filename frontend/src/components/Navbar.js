@@ -13,7 +13,7 @@ function Navbar() {
         <div>
           <ul>
             <li>
-              <Link to="/itineraire">Itinéraire</Link>
+              <Link name="Itinéraires" to="/itineraires">Itinéraires</Link>
             </li>
           </ul>
         </div>

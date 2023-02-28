@@ -1,7 +1,5 @@
 import React from 'react';
 
-document.title = "AdminPage";
-
 function AdminPage() {
   return (
     <div>

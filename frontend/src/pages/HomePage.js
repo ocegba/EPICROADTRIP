@@ -1,7 +1,5 @@
 import React from "react";
 
-document.title = "Home";
-
 function HomePage() {
   return (
     <div>

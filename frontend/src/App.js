@@ -15,13 +15,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<BasicLayouts><HomePage /></BasicLayouts>} />
-        <Route path="/itineraires" element={<BasicLayouts><ItinerairesPage /></BasicLayouts>} />
-        <Route path="/register" element={<BasicLayouts><RegisterPage /></BasicLayouts>}/>
-        <Route path="/login" element={<BasicLayouts><LoginPage /></BasicLayouts>}/>
+        <Route exact path="/" element={<BasicLayouts title="Bienvenue sur Epic Road Trip"><HomePage /></BasicLayouts>} />
+        <Route exact path="/itineraires" element={<BasicLayouts title="Itinéraires"><ItinerairesPage /></BasicLayouts>} />
+        <Route exact path="/register" element={<BasicLayouts title="S'inscrire"><RegisterPage /></BasicLayouts>}/>
+        <Route exact path="/login" element={<BasicLayouts title="S'identifier"><LoginPage /></BasicLayouts>}/>
 
-        <Route path="/profil" element={<BasicLayouts><Profil /></BasicLayouts>} />
-        <Route path="/admin" element={<BasicLayouts><AdminPage /></BasicLayouts>}/>
+        <Route exact path="/profil" element={<BasicLayouts title="Profil"><Profil /></BasicLayouts>} />
+        <Route exact path="/admin" element={<BasicLayouts title="Administrateur"><AdminPage /></BasicLayouts>}/>
       </Routes>
     </BrowserRouter>
   );
