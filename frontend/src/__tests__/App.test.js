@@ -1,7 +1,7 @@
 import { render, screen, debug } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
-import App from "./App";
+import App from "../App";
 
 test("renders home page", () => {
   render(<App />);
