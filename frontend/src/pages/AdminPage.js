@@ -11,7 +11,7 @@ function AdhFct() {
   );
 }
 
-function ItnFct() {
+function Iteneraire() {
   return (
     <div>
       <h1>Les itinéraires</h1>
@@ -48,7 +48,7 @@ function Admin() {
           </button>
         </div>
       </div>
-      {itnOpen && !adhOpen ? <ItnFct /> : <AdhFct />}
+      {itnOpen && !adhOpen ? <Iteneraire /> : <AdhFct />}
     </div>
   );
 }
