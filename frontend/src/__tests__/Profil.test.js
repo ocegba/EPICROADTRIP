@@ -1,17 +1,18 @@
 import userEvent from "@testing-library/user-event";
 import { render, screen, debug, getByAltText } from "@testing-library/react";
 import Profil from '../pages/Profil';
+import { act } from "react-dom/test-utils";
 
 test('renders Profil page ====> Itinéraires', () => {
   render(<Profil />);
 
-  const itnLink = screen.getByRole("link", { name: "Itinéraires" });
+  const itnLink = screen.getByRole("button", { name: /Mes itinéraires/ });
   act(() => {
     userEvent.click(itnLink);
   });
 
   const heading1 = screen.getByRole('heading', { name: /Mes itinéraires/i, level: 1 });
-  const heading3 = screen.getByRole('heading',  {name : /Dans cette section, vous pouvez supprimer ou publier les itinéraires/i, level : 3})
+  const heading3 = screen.getByRole('heading',  {name : /Dans cette section, vous pouvez supprimer, imprimer ou publier les itinéraires/i, level : 3})
 
   expect(heading1).toBeInTheDocument();
   expect(heading3).toBeInTheDocument();
@@ -20,7 +21,7 @@ test('renders Profil page ====> Itinéraires', () => {
 test('renders Profil page ====> Réglages', () => {
     render(<Profil />);
 
-    const regLink = screen.getByRole("link", { name: "Réglages" });
+    const regLink = screen.getByRole("button", { name: /Mes réglages/ });
     act(() => {
       userEvent.click(regLink);
     });
