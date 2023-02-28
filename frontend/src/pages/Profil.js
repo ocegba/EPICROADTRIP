@@ -1,7 +1,5 @@
 import React from 'react';
 
-document.title = "Profil";
-
 function Profil() {
   return (
     <div>

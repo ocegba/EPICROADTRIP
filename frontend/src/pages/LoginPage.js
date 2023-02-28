@@ -1,7 +1,5 @@
 import React from 'react';
 
-document.title = "LoginPage";
-
 function LoginPage() {
   return (
     <div>

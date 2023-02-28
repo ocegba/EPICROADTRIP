@@ -1,7 +1,5 @@
 import React from 'react';
 
-document.title = "ItinerairesPage";
-
 function ItinerairesPage() {
   return (
     <div>

@@ -1,7 +1,5 @@
 import React from 'react';
 
-document.title = "RegisterPage";
-
 function RegisterPage() {
   return (
     <div>
