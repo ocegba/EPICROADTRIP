@@ -3,8 +3,8 @@ import React, { useState } from "react";
 function ItnFct() {
   return (
     <div>
-      <h1>Mes itinéraires</h1>
-      <h3>Dans cette section, vous pouvez supprimer, imprimer ou publier les itinéraires</h3>
+      <h1>Les adhérents</h1>
+      <h3>Dans cette section, vous pouvez supprimer les comptes des adhérents</h3>
     </div>
   );
 }
@@ -12,23 +12,8 @@ function ItnFct() {
 function Reglages() {
   return (
     <div>
-      <h1>Mes réglages</h1>
-      <h3>Dans cette section, vous pouvez éditer votre profil</h3>
-
-      <div>
-      <label id="username-label">Username</label>
-        <input aria-labelledby="username-label" />
-
-        <label id="email-label">Email</label>
-        <input aria-labelledby="email-label" />
-
-        <label id="password-label">Mot de passe</label>
-        <input aria-labelledby="password-label" />
-
-        <button>Modifier</button>
-
-        <button>Supprimer mon compte</button>
-      </div>
+      <h1>Les itinéraires</h1>
+      <h3>Dans cette section, vous pouvez supprimer les itinéraires publiés</h3>
     </div>
   );
 }
@@ -47,7 +32,7 @@ function Profil() {
               regIsOpen(false);
             }}
           >
-            Mes itinéraires
+            Les adhérents
           </button>
         </div>
         <div>
@@ -57,7 +42,7 @@ function Profil() {
               regIsOpen(true);
             }}
           >
-            Mes réglages
+            Les itinéraires
           </button>
         </div>
       </div>
