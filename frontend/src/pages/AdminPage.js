@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 
-function ItnFct() {
+function AdhFct() {
   return (
     <div>
       <h1>Les adhérents</h1>
-      <h3>Dans cette section, vous pouvez supprimer les comptes des adhérents</h3>
+      <h3>
+        Dans cette section, vous pouvez supprimer les comptes des adhérents
+      </h3>
     </div>
   );
 }
 
-function Reglages() {
+function ItnFct() {
   return (
     <div>
       <h1>Les itinéraires</h1>
@@ -18,9 +20,9 @@ function Reglages() {
   );
 }
 
-function Profil() {
+function Admin() {
+  const [adhOpen, adhIsOpen] = useState(false);
   const [itnOpen, itnIsOpen] = useState(false);
-  const [regOpen, regIsOpen] = useState(false);
 
   return (
     <div>
@@ -28,8 +30,8 @@ function Profil() {
         <div>
           <button
             onClick={() => {
-              itnIsOpen(true);
-              regIsOpen(false);
+              adhIsOpen(true);
+              itnIsOpen(false);
             }}
           >
             Les adhérents
@@ -38,17 +40,17 @@ function Profil() {
         <div>
           <button
             onClick={() => {
-              itnIsOpen(false);
-              regIsOpen(true);
+              adhIsOpen(false);
+              itnIsOpen(true);
             }}
           >
             Les itinéraires
           </button>
         </div>
       </div>
-      {regOpen && !itnOpen ? <Reglages /> : <ItnFct />}
+      {itnOpen && !adhOpen ? <ItnFct /> : <AdhFct />}
     </div>
   );
 }
 
-export default Profil;
+export default Admin;

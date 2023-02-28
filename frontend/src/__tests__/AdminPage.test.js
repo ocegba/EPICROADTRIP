@@ -12,7 +12,7 @@ test('renders Admin page ====> Adhérents', () => {
   });
 
   const heading1 = screen.getByRole('heading', { name: /Les adhérents/i, level: 1 });
-  const heading3 = screen.getByRole('heading',  {name : /Dans cette section, vous pouvez supprimer les comptes des adhérents/i, level : 3})
+  const heading3 = screen.getByRole('heading',  { name : /Dans cette section, vous pouvez supprimer les comptes des adhérents/i, level : 3})
 
   expect(heading1).toBeInTheDocument();
   expect(heading3).toBeInTheDocument();
@@ -27,7 +27,7 @@ test('renders Admin page ====> Les itinéraires', () => {
     });
 
     const heading1 = screen.getByRole('heading', { name: /Les itinéraires/i, level: 1 });
-    const heading3 = screen.getByRole('heading',  {name : /Dans cette section, vous pouvez supprimer les itinéraires publiés/i, level : 3})
+    const heading3 = screen.getByRole('heading',  { name : /Dans cette section, vous pouvez supprimer les itinéraires publiés/i, level : 3 })
 
 
     expect(heading1).toBeInTheDocument();
