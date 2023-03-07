@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 
 async function bootstrap() {
-  console.log(process.env.ACCESS_SECRET);
+  console.log('helloooooooooooooooo', process.env.ACCESS_SECRET);
   dotenv.config();
   const app = await NestFactory.create(AppModule);
 

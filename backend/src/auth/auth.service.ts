@@ -82,9 +82,6 @@ export class AuthService {
           userId: user.id,
         },
         process.env.ACCESS_SECRET,
-        {
-          expiresIn: '1h',
-        },
       ),
     };
   }
