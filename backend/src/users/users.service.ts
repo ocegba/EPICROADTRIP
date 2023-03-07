@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 export class UsersService {
   private users: User[] = [
     {
+      userId: 1,
       id: 0,
       Username: 'hello',
       Email: 'got@gmail.com',
