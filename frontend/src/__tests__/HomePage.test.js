@@ -24,11 +24,3 @@ test('render home page', () => {
     expect(srchButton).toBeInTheDocument();
     expect(trvlMessage).toBeInTheDocument();
 })
-test('click button', () => {
-
-    render (<HomePage />);
-
-
-
-
-})
