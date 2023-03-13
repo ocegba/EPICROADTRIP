@@ -1,6 +1,6 @@
 CREATE TABLE `Users` (
   `userId` int, 
-  `Id` int,
+  `id` int,
   `Username` nvarchar(450),
   `Email` nvarchar(450),
   `Password` nvarchar(450),

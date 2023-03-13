@@ -23,6 +23,9 @@ services:
       - ./backend/src:/app/src
     networks:
       - T-WEB
+    environment:
+      - ACCESS_SECRET:
+      - REFRESH_SECRET:
 
   mysql:
     image: mariadb:10.3

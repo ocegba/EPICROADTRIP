@@ -7,7 +7,7 @@ import { LoginDto } from './dto/login.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login')
+  @Post('/login')
   async login(@Req() request, @Ip() ip: string, @Body() body: LoginDto) {
     return this.authService.login(body.Email, body.Password, {
       ipAddress: ip,

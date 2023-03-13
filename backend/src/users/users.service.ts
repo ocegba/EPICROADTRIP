@@ -5,10 +5,10 @@ import { Injectable } from '@nestjs/common';
 export class UsersService {
   private users: User[] = [
     {
-      userId: 1,
       id: 0,
+      userId: 0,
       Username: 'hello',
-      Email: 'got@gmail.com',
+      Email: 'ggg@gmail.com',
       Password: '1234',
       RoleId: '1',
       Created_at: new Date(),
