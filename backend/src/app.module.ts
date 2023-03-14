@@ -14,7 +14,7 @@ import { DislikesModule } from './dislikes/dislikes.module';
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'mysql',
+      host: 'ert-mysql',
       port: 3306,
       username: 'root',
       password: 'root',

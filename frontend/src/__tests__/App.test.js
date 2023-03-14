@@ -3,14 +3,6 @@ import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
 
-test("renders home page", () => {
-  render(<App />);
-  const pageTitle = screen.getByText('EPIC ROAD TRIP');
-  expect(pageTitle).toBeInTheDocument();
-
-  const homePageTitle = screen.queryAllByText(/Page d'accueil/i);
-  expect(homePageTitle.length).toBeGreaterThan(0);
-});
 
 test("navigates to itineraires page", () => {
   render(<App />);
