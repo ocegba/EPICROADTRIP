@@ -1,5 +1,8 @@
 import { sign } from 'jsonwebtoken';
+// import * as dotenv from 'dotenv';
+import { env } from 'process';
 
+// dotenv.config();
 class RefreshToken {
   constructor(init?: Partial<RefreshToken>) {
     Object.assign(this, init);
@@ -14,7 +17,7 @@ class RefreshToken {
   Created_at: Date;
 
   sign(): string {
-    return sign({ ...this }, process.env.RESFRESH_SECRET);
+    return sign({ ...this }, env.REFRESH_SECRET);
   }
 }
 export default RefreshToken;
