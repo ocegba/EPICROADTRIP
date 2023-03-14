@@ -1,9 +1,23 @@
-export class User {
-  userId: number;
-  id: number;
-  Username: string;
-  Email: string;
-  Password: string;
-  RoleId: string;
-  Created_at: Date;
+import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
+
+@Entity()
+export class User extends Model {
+    @PrimaryGeneratedColumn()
+    Id: string;
+
+    @Column()
+    Username: string;
+
+    @Column()
+    Email: string;
+
+    @Column()
+    Password: string;
+
+    @ForeignKey(() => Role)
+    @Column()
+    RoleId: string;
+
+    @Column()
+    Created_at: Date;
 }
