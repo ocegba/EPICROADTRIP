@@ -1,11 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
+import { Role } from 'src/roles/entities/role.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
-export class Dislike extends Model {
+export class Dislike {
     @PrimaryGeneratedColumn()
     Id: string;
 
-    @ForeignKey(() => Role)
+    @OneToMany(type => Role, role=> role.Id)
     @Column()
     UserId: string;
 

@@ -16,7 +16,7 @@ export class AuthService {
       return undefined;
     }
 
-    const user = await this.userService.findOne(refreshToken.id);
+    const user = await this.userService.findOne(String(refreshToken.id));
     if (!user) {
       return undefined;
     }
@@ -71,7 +71,7 @@ export class AuthService {
           ? 0
           : this.refreshTokens[this.refreshTokens.length - 1].id + 1,
       ...values,
-      userId: user.id,
+      userId: user.Id,
     });
     this.refreshTokens.push(refreshObject);
 
@@ -79,7 +79,7 @@ export class AuthService {
       refreshToken: refreshObject.sign(),
       accessToken: sign(
         {
-          userId: user.id,
+          userId: user.Id,
         },
         process.env.ACCESS_SECRET,
       ),

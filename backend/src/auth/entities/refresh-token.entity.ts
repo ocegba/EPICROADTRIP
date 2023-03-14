@@ -9,7 +9,7 @@ class RefreshToken {
   }
 
   id: number;
-  userId: number;
+  userId: string;
   Username: string;
   Email: string;
   Password: string;
