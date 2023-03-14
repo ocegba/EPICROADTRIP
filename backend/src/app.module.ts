@@ -3,6 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RolesModule } from './roles/roles.module';
+import { UsersModule } from './users/users.module';
+import { ParcoursSauvegarderModule } from './parcours-sauvegarder/parcours-sauvegarder.module';
+import { LikesModule } from './likes/likes.module';
+import { DislikesModule } from './dislikes/dislikes.module';
 
 @Module({
   imports: [
@@ -17,6 +22,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: [],
       synchronize: true,
     }),
+    RolesModule,
+    UsersModule,
+    ParcoursSauvegarderModule,
+    LikesModule,
+    DislikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
