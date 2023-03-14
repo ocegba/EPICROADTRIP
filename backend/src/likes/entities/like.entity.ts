@@ -1,10 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
 
 @Entity()
-export class Like {
+export class Like extends Model {
     @PrimaryGeneratedColumn()
     Id: string;
 
+    @ForeignKey(() => Role)
     @Column()
     UserId: string;
 

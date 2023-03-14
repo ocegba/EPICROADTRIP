@@ -1,16 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
 
 @Entity()
-export class Role {
+export class Role extends Model {
+    @HasMany(() => User)
     @PrimaryGeneratedColumn()
     Id: string;
 
     @Column()
-    UserId: string;
-
-    @Column()
-    ParcoursId: string;
-
-    @Column()
-    DisLike: boolean;
+    Name: string;
 }

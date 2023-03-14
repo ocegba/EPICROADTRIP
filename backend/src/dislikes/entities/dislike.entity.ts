@@ -1,10 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
 
 @Entity()
-export class Dislike {
+export class Dislike extends Model {
     @PrimaryGeneratedColumn()
     Id: string;
 
+    @ForeignKey(() => Role)
     @Column()
-    Name: string;
+    UserId: string;
+
+    @Column()
+    ParcoursId: string;
+
+    @Column()
+    DisLike: boolean;
 }
