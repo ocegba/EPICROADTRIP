@@ -1,17 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
+import { Role } from 'src/roles/entities/role.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
-export class Like extends Model {
-    @PrimaryGeneratedColumn()
-    Id: string;
+export class Like {
+  @PrimaryGeneratedColumn()
+  Id: string;
 
-    @ForeignKey(() => Role)
-    @Column()
-    UserId: string;
+  @OneToMany((type) => Role, (role) => role.Id)
+  @Column()
+  UserId: string;
 
-    @Column()
-    ParcoursId: string;
+  @Column()
+  ParcoursId: string;
 
-    @Column()
-    Like: boolean;
+  @Column()
+  Like: boolean;
 }

@@ -1,23 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn, HasMany } from 'typeorm';
+import { Role } from 'src/roles/entities/role.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
-export class User extends Model {
-    @PrimaryGeneratedColumn()
-    Id: string;
+export class User {
+  @PrimaryGeneratedColumn()
+  Id: string;
 
-    @Column()
-    Username: string;
+  @Column()
+  Username: string;
 
-    @Column()
-    Email: string;
+  @Column()
+  userId: string;
 
-    @Column()
-    Password: string;
+  @Column()
+  Email: string;
 
-    @ForeignKey(() => Role)
-    @Column()
-    RoleId: string;
+  @Column()
+  Password: string;
 
-    @Column()
-    Created_at: Date;
+  @OneToMany((type) => Role, (role) => role.Id)
+  @Column()
+  RoleId: string;
+
+  @Column()
+  Created_at: Date;
 }

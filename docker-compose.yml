@@ -27,8 +27,8 @@ services:
     networks:
       - T-WEB
     environment:
-      ACCESS_SECRET:
-      REFRESH_SECRET:
+      ACCESS_SECRET: ${ACCESS_SECRET}
+      REFRESH_SECRET: ${REFRESH_SECRET}
     depends_on:
       # set a dependency between your service and the database: this means that your application will not run if the db service is not running, but it doesn't assure you that the dabase will be ready to accept incoming connection (so your application could crash untill the db initializes itself)
       ert-mysql:
@@ -41,6 +41,7 @@ services:
       - mariadb:/var/lib/mysql/data
       - ./SQL/EpicRoadTrip.sql:/docker-entrypoint-initdb.d/EpicRoadTrip.sql
     environment:
+      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: EpicRoadTrip
     ports:
