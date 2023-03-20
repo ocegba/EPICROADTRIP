@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-// import * as dotenv from 'dotenv';
+
 import { env } from 'process';
 
 // dotenv.config();
@@ -8,7 +8,7 @@ class RefreshToken {
     Object.assign(this, init);
   }
 
-  id: number;
+  id: string;
   userId: string;
   Username: string;
   Email: string;

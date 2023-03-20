@@ -13,7 +13,7 @@ import { DislikesModule } from './dislikes/dislikes.module';
 @Module({
   imports: [
     UsersModule,
-    AuthModule, 
+    AuthModule,
     RolesModule,
     UsersModule,
     ParcoursSauvegarderModule,

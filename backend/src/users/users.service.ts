@@ -7,30 +7,33 @@ import { User } from './entities/user.entity';
 export class UsersService {
   private users: User[] = [
     {
-      Id: "336DA",
+      Id: '336DA',
       Username: 'Bob',
+      userId: 'hello',
       Email: 'bob@gmail.com',
       Password: 'bobPass',
-      RoleId: "336DA",
-      Created_at: new Date("2023-12-05"),
+      RoleId: '336DA',
+      Created_at: new Date('2023-12-05'),
     },
 
     {
-      Id: "36fge",
+      Id: '36fge',
       Username: 'John',
+      userId: 'hello',
       Email: 'john@gmail.com',
       Password: 'johnPass',
-      RoleId: "336DA",
-      Created_at: new Date("2023-12-05"),
+      RoleId: '336DA',
+      Created_at: new Date('2023-12-05'),
     },
 
     {
-      Id: "36PGE",
+      Id: '36PGE',
       Username: 'Gary',
+      userId: 'hello',
       Email: 'gary@gmail.com',
       Password: 'garyPass',
-      RoleId: "336DA",
-      Created_at: new Date("2023-12-05"),
+      RoleId: '336DA',
+      Created_at: new Date('2023-12-05'),
     },
   ];
 
@@ -46,11 +49,11 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 

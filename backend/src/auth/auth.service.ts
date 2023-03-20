@@ -68,8 +68,8 @@ export class AuthService {
     const refreshObject = new RefreshToken({
       id:
         this.refreshTokens.length === 0
-          ? 0
-          : this.refreshTokens[this.refreshTokens.length - 1].id + 1,
+          ? '0'
+          : '' + (+this.refreshTokens[this.refreshTokens.length - 1].id + 1),
       ...values,
       userId: user.Id,
     });
