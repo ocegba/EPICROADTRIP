@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import peacevalleyImg from "../media/PeaceValley.jpg";
 import airplaneImg from "../media/Airplane.png";
-import mapImg from "../media/Map.png";
+import GMap from "../components/GMap"
+
+
 
 function affichMap() {
   return (
     <div title="srchMap">
       <button>burger</button>
-      <img src={mapImg} alt="Map"></img>
-    </div>
+      <GMap />
+    </div>    
   );
 }
 
