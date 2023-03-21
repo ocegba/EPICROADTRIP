@@ -1,10 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
+  ) {}
+
   private users: User[] = [
     {
       Id: '336DA',
@@ -37,8 +42,19 @@ export class UsersService {
     },
   ];
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(user: any): Promise<User[]> {
+    const { Username } = user;
+    const u = await this.usersRepository.findOneBy({ Username });
+    if (u) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'name must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return await this.usersRepository.save(user);
   }
 
   findAll() {
@@ -49,7 +65,7 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string) {
     return `This action updates a #${id} user`;
   }
 
