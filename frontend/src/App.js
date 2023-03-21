@@ -20,7 +20,7 @@ function App() {
         <Route exact path="/register" element={<BasicLayouts title="S'inscrire"><RegisterPage /></BasicLayouts>}/>
         <Route exact path="/login" element={<BasicLayouts title="S'identifier"><LoginPage /></BasicLayouts>}/>
 
-        <Route exact path="/profil" element={<BasicLayouts title="Profil"><Profil /></BasicLayouts>} />
+        <Route exact path="/profil" type="private" element={<BasicLayouts title="Profil"><Profil /></BasicLayouts>} />
         <Route exact path="/admin" element={<BasicLayouts title="Administrateur"><AdminPage /></BasicLayouts>}/>
       </Routes>
     </BrowserRouter>
