@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import Icon from "@mui/material/Icon";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function ItnFct() {
   return (
@@ -10,60 +14,117 @@ function ItnFct() {
 }
 
 function Reglages() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const submitForm = () => {
+    if (email === "" || password === "") {
+      setError("Champs requis");
+      return;
+    }
+    //const user = { Email: email, Password: password }
+    //props.login(user);
+  };
   return (
     <div>
       <h1>Mes réglages</h1>
       <h3>Dans cette section, vous pouvez éditer votre profil</h3>
 
-      <div>
-      <label id="username-label">Username</label>
-        <input aria-labelledby="username-label" />
+      <form>
+          <label id="username-label">Username</label>
+          <TextField
+            variant="outlined"
+            fullWidth
+            className="form-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-        <label id="email-label">Email</label>
-        <input aria-labelledby="email-label" />
+          <label id="email-label">Email</label>
+          <TextField
+            variant="outlined"
+            fullWidth
+            className="form-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            inputProps={{ pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" }}
+            helperText="Veuillez entrer une adresse e-mail valide"
+          />
 
-        <label id="password-label">Mot de passe</label>
-        <input aria-labelledby="password-label" />
+          <label id="password-label">Mot de passe</label>
+          <TextField
+            variant="outlined"
+            fullWidth
+            className="form-input"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            inputProps={{ pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})" }}
+            helperText="Le mot de passe doit comporter au moins 8 caractères, avec au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial"
+          />
 
-        <button>Modifier</button>
+          <Button
+            variant="contained"
+            fullWidth
+            className="edit-input"
+            onClick={submitForm}
+          >
+            Modifier
+          </Button>
 
-        <button>Supprimer mon compte</button>
-      </div>
+          <Button
+            variant="contained"
+            fullWidth
+            className="delete-btn"
+            onClick={submitForm}
+          >
+            Supprimer mon compte
+          </Button>
+        </form>
     </div>
   );
 }
 
-function Profil() {
-  const [itnOpen, itnIsOpen] = useState(false);
-  const [regOpen, regIsOpen] = useState(false);
+export default function Profil() {
+  const [itnOpen, setItnOpen] = useState(true);
+  const [regOpen, setRegOpen] = useState(false);
+
+  const handleItnClick = () => {
+    setItnOpen(true);
+    setRegOpen(false);
+  };
+
+  const handleRegClick = () => {
+    setItnOpen(false);
+    setRegOpen(true);
+  };
 
   return (
-    <div>
+    <div className="Profil">
       <div className="SideBar">
-        <div>
-          <button
-            onClick={() => {
-              itnIsOpen(true);
-              regIsOpen(false);
-            }}
-          >
-            Mes itinéraires
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              itnIsOpen(false);
-              regIsOpen(true);
-            }}
-          >
-            Mes réglages
-          </button>
-        </div>
+        <button
+          className={itnOpen ? "selected" : ""}
+          onClick={handleItnClick}
+        >
+          Mes itinéraires
+          <Icon aria-label="travel">
+            <ArrowForwardIosRoundedIcon />
+          </Icon>
+        </button>
+        <div className="line"></div>
+        <button
+          className={regOpen ? "selected" : ""}
+          onClick={handleRegClick}
+        >
+          Mes réglages
+          <Icon aria-label="travel">
+            <ArrowForwardIosRoundedIcon />
+          </Icon>
+        </button>
       </div>
       {regOpen && !itnOpen ? <Reglages /> : <ItnFct />}
     </div>
   );
 }
-
-export default Profil;
