@@ -14,20 +14,17 @@ import AdminPage from "./pages/AdminPage";
 import AuthRoute from "./components/AuthRoute.js";
 
 import { Provider } from "react-redux";
-import { applyMiddleware } from "redux";
 
 import reducer from "./reducer";
-import { createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 
 import { appMiddleware } from "./middlewares/app";
 import { apiMiddleware } from "./middlewares/core";
 
-const createStoreWithMiddleware = applyMiddleware(
-  appMiddleware,
-  apiMiddleware
-)(createStore);
-
-const store = createStoreWithMiddleware(reducer);
+const store = configureStore({
+  reducer,
+  middleware: [appMiddleware, apiMiddleware],
+});
 
 function App() {
   return (
