@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import voyageursImg from "../media/voyageurs.jpg";
 
-//import { TextField, Typography, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import Button from '@mui/material/Button';
@@ -10,10 +9,6 @@ import TextField from '@mui/material/TextField';
 
 import { login } from "../services/auth";
 
-function Alert_page(props) {
-  return <Alert severity="error" elevation={6} variant="filled" {...props} />;
-}
-
 export default connect(({ isLoading }) => ({ isLoading }), { login }) ( props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,22 +16,22 @@ export default connect(({ isLoading }) => ({ isLoading }), { login }) ( props =>
 
   const submitForm = () => {
     if (email === "" || password === "") {
-      setError("Fields are required");
+      setError("Champs requis");
       return;
     }
     const user = { Email: email, Password: password }
-    props.login(user);
-  };
+    props.login({user});
+  }
 
   return (
-    <div>
+    <div className="LoginPage">
+      <div className="Formulaire">
       <h1>Welcome back!</h1>
       <h3>Entrez vos informations afin de vous connecter</h3>
 
       <form>
         <label id="email-label">Email</label>
         <TextField
-          label="Email"
           variant="outlined"
           fullWidth
           className="form-input"
@@ -46,7 +41,6 @@ export default connect(({ isLoading }) => ({ isLoading }), { login }) ( props =>
 
         <label id="password-label">Mot de passe</label>
         <TextField
-          label="Password"
           variant="outlined"
           fullWidth
           className="form-input"
@@ -59,7 +53,7 @@ export default connect(({ isLoading }) => ({ isLoading }), { login }) ( props =>
           variant="contained"
           color="primary"
           fullWidth
-          className="form-input"
+          className="btn-ident"
           size="large"
           onClick={submitForm}
         >
@@ -67,7 +61,7 @@ export default connect(({ isLoading }) => ({ isLoading }), { login }) ( props =>
         </Button>
         <p>
           Vous n'êtes pas inscrit ?{" "}
-          <a href="/inscription">Inscrivez-vous ici</a>
+          <a href="/register">Inscrivez-vous ici</a>
         </p>
         {error && (
           <Alert severity="error" onClick={() => setError(null)}>
@@ -75,7 +69,8 @@ export default connect(({ isLoading }) => ({ isLoading }), { login }) ( props =>
           </Alert>
         )}
       </form>
-      <div>
+      </div>
+      <div className="Image">
         <img src={voyageursImg} alt="Voyageurs Sur Une Colline" />
       </div>
     </div>
