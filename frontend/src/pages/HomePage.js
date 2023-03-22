@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import peacevalleyImg from "../media/PeaceValley.jpg";
 import airplaneImg from "../media/Airplane.png";
 import GMap from "../components/GMap";
@@ -45,8 +46,12 @@ function HomePage() {
       )}
 
       <div>
-        <img src={airplaneImg} title="trvlIcon" />
-        <h3>Voyage</h3>
+        <div className="travel-entete">
+          <Icon aria-label="travel">
+            <FlightTakeoffIcon />
+          </Icon>
+          <h3>Voyage</h3>
+        </div>
       </div>
     </div>
   );
