@@ -41,15 +41,16 @@ services:
       - mariadb:/var/lib/mysql/data
       - ./SQL/EpicRoadTrip.sql:/docker-entrypoint-initdb.d/EpicRoadTrip.sql
     environment:
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: EpicRoadTrip
+      MYSQL_HOST: ${MYSQL_HOST}
     ports:
       - "3306:3306"
     networks:
       - T-WEB
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "${MYSQL_HOST}"]
       timeout: 20s
       retries: 10
 

@@ -15,7 +15,6 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() param: any) {
     const newParam = { ...param, status: true };
@@ -37,7 +36,14 @@ export class UsersController {
 
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    try {
+      return {
+        message: 'Successfully find all user profiles',
+        data: this.usersService.findAll(),
+      };
+    } catch (err) {
+      console.log('error');
+    }
   }
 
   @Get(':id')

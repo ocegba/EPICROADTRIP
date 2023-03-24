@@ -38,14 +38,21 @@ CREATE TABLE `Dislikes` (
   `DisLike` bit
 );
 
-ALTER TABLE `Roles` ADD FOREIGN KEY (`Id`) REFERENCES `Users` (`RoleId`);
 
-ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `ParcoursSauvegarder` (`UserId`);
+-- ALTER TABLE `Users` ADD FOREIGN KEY (`RoleId`) REFERENCES `Roles` (`Id`);
 
-ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `Likes` (`UserId`);
+-- ALTER TABLE `Roles` ADD FOREIGN KEY (`Id`) REFERENCES `Users` (`RoleId`);
 
-ALTER TABLE `ParcoursSauvegarder` ADD FOREIGN KEY (`Id`) REFERENCES `Likes` (`ParcoursId`);
+-- ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `Likes` (`UserId`);
 
-ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `Dislikes` (`UserId`);
+-- ALTER TABLE `ParcoursSauvegarder` ADD FOREIGN KEY (`Id`) REFERENCES `Likes` (`ParcoursId`);
 
-ALTER TABLE `ParcoursSauvegarder` ADD FOREIGN KEY (`Id`) REFERENCES `Dislikes` (`ParcoursId`);
+-- ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `Dislikes` (`UserId`);
+
+-- ALTER TABLE `ParcoursSauvegarder` ADD FOREIGN KEY (`Id`) REFERENCES `Dislikes` (`ParcoursId`);
+
+-- ALTER TABLE `Likes` ADD FOREIGN KEY (`UserId`) REFERENCES `Users` (`userId`);
+-- ALTER TABLE `Likes` ADD FOREIGN KEY (`ParcoursId`) REFERENCES `ParcoursSauvegarder` (`Id`);
+
+-- ALTER TABLE `Dislikes` ADD FOREIGN KEY (`UserId`) REFERENCES `Users` (`userId`);
+-- ALTER TABLE `Dislikes` ADD FOREIGN KEY (`ParcoursId`) REFERENCES `ParcoursSauvegarder` (`Id`);

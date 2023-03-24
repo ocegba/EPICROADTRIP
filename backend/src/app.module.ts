@@ -23,8 +23,8 @@ import { DislikesModule } from './dislikes/dislikes.module';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'ert-mysql',
+      type: 'mariadb',
+      host: 'ert-mariadb',
       port: 3306,
       username: 'root',
       password: 'root',

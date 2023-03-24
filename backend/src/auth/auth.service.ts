@@ -49,16 +49,16 @@ export class AuthService {
     password: string,
     values: { userAgent: string; ipAddress: string },
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
-    const user = await this.userService.findByEmail(email);
-    if (!user) {
-      return undefined;
-    }
+    // const user = await this.userService.findByEmail(email);
+    // if (!user) {
+    //   return undefined;
+    // }
     // verify your user -- use argon2 for password hashing!!
-    if (user.Password !== password) {
+    if (User.password !== password) {
       return undefined;
     }
 
-    return this.newRefreshAndAccessToken(user, values);
+    return this.newRefreshAndAccessToken(User, values);
   }
 
   private async newRefreshAndAccessToken(
