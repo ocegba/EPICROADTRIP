@@ -6,4 +6,6 @@ export class LoginDto {
 
   @IsNotEmpty()
   Password: string;
+  
+  user: { Email: any; Password: any; };
 }

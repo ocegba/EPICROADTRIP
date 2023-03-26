@@ -93,7 +93,7 @@ export class AuthService {
     }
     // delete refreshtoken from db
     this.refreshTokens = this.refreshTokens.filter(
-      (refreshToken) => refreshToken.id !== refreshToken.id,
+      (refresh) => refresh.id !== refreshToken.id,
     );
   }
 }

@@ -9,7 +9,8 @@ export class AuthController {
 
   @Post('login')
   async login(@Req() request, @Ip() ip: string, @Body() body: LoginDto) {
-    return this.authService.login(body.Email, body.Password, {
+    const { Email, Password } = body.user;
+    return this.authService.login(Email, Password, {
       ipAddress: ip,
       userAgent: request.headers['user-agent'],
     });
