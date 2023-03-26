@@ -3,13 +3,14 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @Column()
   Id: string;
 
   @Column()
   Username: string;
 
   @Column()
+  @PrimaryGeneratedColumn()
   userId: string;
 
   @Column()

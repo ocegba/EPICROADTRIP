@@ -9,13 +9,17 @@ import { RolesModule } from './roles/roles.module';
 import { ParcoursSauvegarderModule } from './parcours-sauvegarder/parcours-sauvegarder.module';
 import { LikesModule } from './likes/likes.module';
 import { DislikesModule } from './dislikes/dislikes.module';
+import { User } from './users/entities/user.entity';
+import { Role } from './roles/entities/role.entity';
+import { ParcoursSauvegarder } from './parcours-sauvegarder/entities/parcours-sauvegarder.entity';
+import { Like } from './likes/entities/like.entity';
+import { Dislike } from './dislikes/entities/dislike.entity';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     RolesModule,
-    UsersModule,
     ParcoursSauvegarderModule,
     LikesModule,
     DislikesModule,
@@ -29,7 +33,7 @@ import { DislikesModule } from './dislikes/dislikes.module';
       username: 'root',
       password: 'root',
       database: 'EpicRoadTrip',
-      entities: [],
+      entities: [User, Role, ParcoursSauvegarder, Like, Dislike],
       synchronize: true,
     }),
   ],

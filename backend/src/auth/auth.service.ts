@@ -47,9 +47,14 @@ export class AuthService {
   async login(
     email: string,
     password: string,
-    values: { userAgent: string; ipAddress: string },
+    values: { userAgent: string; ipAddress: string }
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
+    console.log("email in auth : ", email)
     const user = await this.userService.findByEmail(email);
+    console.log("user in auth : ", user)
+    const users = await this.userService.findAll();
+    console.log("user in auth : ", users)
+
     if (!user) {
       return undefined;
     }
