@@ -23,7 +23,7 @@ services:
       - "3000:3000"
     volumes:
       - ./backend/.:/app/.
-    command: bash -c "npm install && npm start"
+    command: bash -c "npm install && npm run start"
     networks:
       - T-WEB
     environment:
@@ -31,10 +31,10 @@ services:
       REFRESH_SECRET: ${REFRESH_SECRET}
     depends_on:
       # set a dependency between your service and the database: this means that your application will not run if the db service is not running, but it doesn't assure you that the dabase will be ready to accept incoming connection (so your application could crash untill the db initializes itself)
-      ert-mysql:
+      ert-mariadb:
         condition: service_healthy
 
-  ert-mysql:
+  ert-mariadb:
     image: mariadb:10.3
     container_name: ert-mariadb
     volumes:

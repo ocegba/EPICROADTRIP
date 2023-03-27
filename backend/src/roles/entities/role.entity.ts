@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Role {
-    @OneToMany(type => User, user => user.RoleId)
+    @OneToMany(() => User, (user) => user.RoleId)
     @PrimaryGeneratedColumn()
     Id: string;
 
