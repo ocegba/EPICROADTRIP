@@ -10,9 +10,6 @@ export class User {
   Username: string;
 
   @Column()
-  userId: string;
-
-  @Column()
   Email: string;
 
   @Column()
@@ -22,8 +19,10 @@ export class User {
   role: Role;
 
   @Column()
-  RoleId: string;
+  IdRole: string;
 
   @Column()
   Created_at: Date;
+
+  static password: string;
 }

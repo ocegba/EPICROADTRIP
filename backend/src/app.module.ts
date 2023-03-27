@@ -29,7 +29,7 @@ import { DislikesModule } from './dislikes/dislikes.module';
       username: 'root',
       password: 'root',
       database: 'EpicRoadTrip',
-      entities: [],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
   ],

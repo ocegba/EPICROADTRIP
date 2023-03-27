@@ -24,7 +24,7 @@ export class UsersController {
         data: await this.usersService.create(newParam),
       };
     } catch (err) {
-      console.log('error');
+      console.log('errorbcvbcvbvcbb', err);
     }
   }
 
