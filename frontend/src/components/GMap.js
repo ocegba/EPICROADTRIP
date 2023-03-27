@@ -21,7 +21,7 @@ function GMap({ location }) {
         lat: location.geometry.location.lat(),
         lng: location.geometry.location.lng(),
       });
-      setMapZoom(5);
+      setMapZoom(10);
     }
   }, [location]);
 
