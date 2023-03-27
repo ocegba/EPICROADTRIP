@@ -8,15 +8,6 @@ import mapImg from "../media/Map.png";
 import Icon from "@mui/material/Icon";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
-function affichMap() {
-  return (
-    <div title="srchMap">
-      <button>burger</button>
-      <img src={mapImg} alt="Map"></img>
-    </div>
-  );
-}
-
 function HomePage() {
   const [mpOpen, mpIsOpen] = useState(false);
   const [autocomplete, setAutocomplete] = useState(null);
@@ -54,7 +45,11 @@ function HomePage() {
           </button>
         </div>
       ) : (
-        <GMap location={valueLocation} />
+        <div title="srchMap">
+          <button>burger</button>
+          {/* <img src={mapImg} alt="Map"></img> */}
+          <GMap location={valueLocation} />
+        </div>
       )}
 
       <div>
