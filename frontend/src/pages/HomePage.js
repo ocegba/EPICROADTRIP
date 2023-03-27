@@ -11,7 +11,7 @@ function HomePage() {
 
   return (
     <div>
-      {mpOpen ? (
+      {!mpOpen ? (
         <div title="srchPlc">
           <img src={peacevalleyImg} alt="Vallée Atmosphérique"></img>
           <h1>
