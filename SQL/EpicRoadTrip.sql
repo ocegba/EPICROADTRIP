@@ -1,50 +1,51 @@
 CREATE TABLE `Users` (
-  `Id` nvarchar(450),
-  `Username` nvarchar(450),
-  `Email` nvarchar(450),
-  `Password` nvarchar(450),
-  `RoleId` nvarchar(450),
-  `Created_at` datetime
+  `userId` nvarchar(450) NOT NULL,
+  `Id` nvarchar(450) NOT NULL,
+  `Username` nvarchar(450) NOT NULL,
+  `Email` nvarchar(450) NOT NULL,
+  `Password` nvarchar(450) NOT NULL,
+  `RoleId` nvarchar(450) NOT NULL,
+  `Created_at` datetime,
+  PRIMARY KEY (`userId`)
 );
 
 CREATE TABLE `Roles` (
-  `Id` nvarchar(450),
-  `Name` nvarchar(450)
+  `Id` nvarchar(450) NOT NULL,
+  `Name` nvarchar(450),
+  PRIMARY KEY (`Id`)
 );
 
 CREATE TABLE `ParcoursSauvegarder` (
-  `Id` nvarchar(450),
-  `UserId` nvarchar(450),
-  `Adresse` nvarchar(450),
+  `Id` nvarchar(450) NOT NULL,
+  `UserId` nvarchar(450) NOT NULL,
+  `Adresse` nvarchar(450) NOT NULL,
   `Drink` bit,
   `Eat` bit,
   `Travel` bit,
   `Sleep` bit,
-  `Enjoy` bit
+  `Enjoy` bit,
+  PRIMARY KEY (`Id`),
+  FOREIGN KEY (`UserId`) REFERENCES `Users` (`userId`)
 );
 
 CREATE TABLE `Likes` (
-  `Id` nvarchar(450),
-  `UserId` nvarchar(450),
-  `ParcoursId` nvarchar(450),
-  `Like` bit
+  `Id` nvarchar(450) NOT NULL,
+  `UserId` nvarchar(450) NOT NULL,
+  `ParcoursId` nvarchar(450) NOT NULL,
+  `Like` bit,
+  PRIMARY KEY (`Id`),
+  FOREIGN KEY (`UserId`) REFERENCES `Users` (`userId`),
+  FOREIGN KEY (`ParcoursId`) REFERENCES `ParcoursSauvegarder` (`Id`)
 );
 
 CREATE TABLE `Dislikes` (
-  `Id` nvarchar(450),
-  `UserId` nvarchar(450),
-  `ParcoursId` nvarchar(450),
-  `DisLike` bit
+  `Id` nvarchar(450) NOT NULL,
+  `UserId` nvarchar(450) NOT NULL,
+  `ParcoursId` nvarchar(450) NOT NULL,
+  `DisLike` bit,
+  PRIMARY KEY (`Id`),
+  FOREIGN KEY (`UserId`) REFERENCES `Users` (`userId`),
+  FOREIGN KEY (`ParcoursId`) REFERENCES `ParcoursSauvegarder` (`Id`)
 );
 
-ALTER TABLE `Roles` ADD FOREIGN KEY (`Id`) REFERENCES `Users` (`RoleId`);
-
-ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `ParcoursSauvegarder` (`UserId`);
-
-ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `Likes` (`UserId`);
-
-ALTER TABLE `ParcoursSauvegarder` ADD FOREIGN KEY (`Id`) REFERENCES `Likes` (`ParcoursId`);
-
-ALTER TABLE `Users` ADD FOREIGN KEY (`Id`) REFERENCES `Dislikes` (`UserId`);
-
-ALTER TABLE `ParcoursSauvegarder` ADD FOREIGN KEY (`Id`) REFERENCES `Dislikes` (`ParcoursId`);
+ALTER TABLE `Users` ADD FOREIGN KEY (`RoleId`) REFERENCES `Roles` (`Id`);

@@ -1,8 +1,21 @@
 import React, { useState } from "react";
+
 import peacevalleyImg from "../media/PeaceValley.jpg";
-import airplaneImg from "../media/Airplane.png";
 import GMap from "../components/GMap";
 import { Autocomplete } from "@react-google-maps/api";
+import mapImg from "../media/Map.png";
+
+import Icon from "@mui/material/Icon";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+
+function affichMap() {
+  return (
+    <div title="srchMap">
+      <button>burger</button>
+      <img src={mapImg} alt="Map"></img>
+    </div>
+  );
+}
 
 function HomePage() {
   const [mpOpen, mpIsOpen] = useState(false);
@@ -45,8 +58,12 @@ function HomePage() {
       )}
 
       <div>
-        <img src={airplaneImg} title="trvlIcon" />
-        <h3>Voyage</h3>
+        <div className="travel-entete">
+          <Icon aria-label="travel">
+            <FlightTakeoffIcon />
+          </Icon>
+          <h3>Voyage</h3>
+        </div>
       </div>
     </div>
   );
