@@ -19,9 +19,10 @@ export const cancelApiRequest = () => {
   };
 };
 
-export const apiSuccess = ({ response }) => ({
+export const apiSuccess = ({ response, params }) => ({
   type: API_SUCCESS,
   payload: response,
+  params: params
 });
 
 export const apiError = ({ error }) => ({
