@@ -24,10 +24,9 @@ export default connect(({ isLoading, error  }) => ({ isLoading, error  }), { log
       props.login({ user });
 
       if (props.error !== ""){
-        setError(props.error.message);
-
+        setError(props.error);
       }
-      console.log("props", props.user)
+
     };
 
     return (
