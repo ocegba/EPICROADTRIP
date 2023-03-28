@@ -20,11 +20,11 @@ function Reglages() {
   const [error, setError] = useState("");
 
   const submitForm = () => {
-    if (email === "" || password === "") {
+    if (email === "" || password === "" || username === "") {
       setError("Champs requis");
       return;
     }
-    //const user = { Email: email, Password: password }
+    //const user = { Username: username, Email: email, Password: password }
     //props.login(user);
   };
   return (

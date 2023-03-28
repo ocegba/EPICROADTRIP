@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import Icon from "@mui/material/Icon";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function AdhFct() {
   return (
@@ -21,32 +25,41 @@ function Iteneraire() {
 }
 
 function Admin() {
-  const [adhOpen, adhIsOpen] = useState(false);
-  const [itnOpen, itnIsOpen] = useState(false);
+  const [adhOpen, setAdhOpen] = useState(false);
+  const [itnOpen, setItnOpen] = useState(false);
+
+  const handleItnClick = () => {
+    setItnOpen(true);
+    setAdhOpen(false);
+  };
+
+  const handleAdhClick = () => {
+    setItnOpen(false);
+    setAdhOpen(true);
+  };
 
   return (
-    <div>
+    <div className="Profil">
       <div className="SideBar">
-        <div>
           <button
-            onClick={() => {
-              adhIsOpen(true);
-              itnIsOpen(false);
-            }}
+            className={adhOpen ? "selected" : ""}
+            onClick={handleAdhClick}
           >
             Les adhérents
+            <Icon aria-label="travel">
+            <ArrowForwardIosRoundedIcon />
+          </Icon>
           </button>
-        </div>
-        <div>
+          <div className="line"></div>
           <button
-            onClick={() => {
-              adhIsOpen(false);
-              itnIsOpen(true);
-            }}
+            className={itnOpen ? "selected" : ""}
+            onClick={handleItnClick}
           >
             Les itinéraires
+            <Icon aria-label="travel">
+            <ArrowForwardIosRoundedIcon />
+          </Icon>
           </button>
-        </div>
       </div>
       {itnOpen && !adhOpen ? <Iteneraire /> : <AdhFct />}
     </div>
