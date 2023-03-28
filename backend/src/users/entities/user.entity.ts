@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class User {
-  @Column()
+  @PrimaryGeneratedColumn()
   Id: string;
 
   @Column()
