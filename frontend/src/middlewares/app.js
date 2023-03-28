@@ -11,7 +11,7 @@ export const appMiddleware = () => next => action => {
           apiRequest({
             url: `${SERVER_URL}/auth/login`,
             method: "POST",
-            data: action.payload
+            data: action.payload,
           })
         );
         break;
