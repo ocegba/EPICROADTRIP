@@ -67,7 +67,7 @@ export class AuthService {
   private async newRefreshAndAccessToken(
     user: User,
     values: { userAgent: string; ipAddress: string },
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  ): Promise<{ accessToken: string; refreshToken: string; user : {} }> {
     const refreshObject = new RefreshToken({
       id:
         this.refreshTokens.length === 0
@@ -86,6 +86,7 @@ export class AuthService {
         },
         process.env.ACCESS_SECRET,
       ),
+      user: user
     };
   }
 
