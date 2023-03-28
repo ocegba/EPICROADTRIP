@@ -9,19 +9,19 @@ export const apiRequest = ({ url, method, data }) => {
   return {
     type: API_REQUEST,
     meta: { url, method },
-    data : data
+    data: data,
   };
 };
 
 export const cancelApiRequest = () => {
   return {
-    type: CANCEL_API_REQUEST
+    type: CANCEL_API_REQUEST,
   };
 };
 
 export const apiSuccess = ({ response }) => ({
   type: API_SUCCESS,
-  payload: response
+  payload: response,
 });
 
 export const apiError = ({ error }) => ({

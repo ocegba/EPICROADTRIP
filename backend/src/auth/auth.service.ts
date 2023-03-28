@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 import RefreshToken from './entities/refresh-token.entity';
@@ -45,25 +45,23 @@ export class AuthService {
   }
 
   async login(
-    email: string,
-    password: string,
+    Email: string,
+    Password: string,
     values: { userAgent: string; ipAddress: string }
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
-    console.log("email in auth : ", email)
-    const user = await this.userService.findByEmail(email);
-    console.log("user in auth : ", user)
-    const users = await this.userService.findAll();
-    console.log("user in auth : ", users)
+    const User = await this.userService.findByEmail(Email);
 
-    if (!user) {
-      return undefined;
+    if (!User) {
+      throw new NotFoundException(`L'utilisateur avec l'email ${Email} n'a pas été trouvé dans la base de donnée`);
+
     }
     // verify your user -- use argon2 for password hashing!!
-    if (user.Password !== password) {
-      return undefined;
+    if (User.Password !== Password) {
+      throw new NotFoundException(`Mot de passe incorrect`);
+
     }
 
-    return this.newRefreshAndAccessToken(user, values);
+    return this.newRefreshAndAccessToken(User, values);
   }
 
   private async newRefreshAndAccessToken(

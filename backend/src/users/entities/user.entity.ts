@@ -3,15 +3,11 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class User {
-  @Column()
+  @PrimaryGeneratedColumn()
   Id: string;
 
   @Column()
   Username: string;
-
-  @Column()
-  @PrimaryGeneratedColumn()
-  userId: string;
 
   @Column()
   Email: string;
@@ -19,10 +15,15 @@ export class User {
   @Column()
   Password: string;
 
-  @ManyToOne(() => Role, (role) => role.Id)
+  @ManyToOne(() => Role, (role) => role)
+  role: Role;
+
   @Column()
-  RoleId: string;
+  IdRole: string;
 
   @Column()
   Created_at: Date;
+
+  static password: string;
+
 }

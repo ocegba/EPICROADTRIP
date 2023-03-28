@@ -33,7 +33,7 @@ import { Dislike } from './dislikes/entities/dislike.entity';
       username: 'root',
       password: 'root',
       database: 'EpicRoadTrip',
-      entities: [User, Role, ParcoursSauvegarder, Like, Dislike],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
   ],
