@@ -4,23 +4,35 @@ import { UpdateDislikeDto } from './dto/update-dislike.dto';
 
 @Injectable()
 export class DislikesService {
-  create(createDislikeDto: CreateDislikeDto) {
-    return 'This action adds a new dislike';
+  async create(createDislikeDto: any): Promise<CreateDislikeDto[]> {
+    const { DisLike } = createDislikeDto;
+    console.log(DisLike);
+    const u = await this.dislikeRepository.findOneBy({ DisLike });
+    if (u) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'name must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return await this.dislikeRepository.save(DisLike);
   }
 
   findAll() {
     return `This action returns all dislikes`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} dislike`;
   }
 
-  update(id: number, updateDislikeDto: UpdateDislikeDto) {
-    return `This action updates a #${id} dislike`;
+  update(Id: string, data: any): Promise<any> {
+    return this.dislikeRepository.update(Id, data);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} dislike`;
+  async remove(Id: string): Promise<any> {
+    return await this.dislikeRepository.delete(Id);
   }
 }
