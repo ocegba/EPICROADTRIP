@@ -26,20 +26,20 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.usersRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
+  async findOne(Id: string): Promise<any> {
+    return await this.usersRepository.findOneBy({ Id });
   }
 
-  update(id: string) {
-    return `This action updates a #${id} user`;
+  update(Id: string, data: any): Promise<any> {
+    return this.usersRepository.update(Id, data);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(Id: string): Promise<any> {
+    return await this.usersRepository.delete(Id);
   }
 
   async findByEmail(Email: string): Promise<User | undefined> {

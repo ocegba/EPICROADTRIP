@@ -1,11 +1,11 @@
 import {
   Controller,
   Get,
-  Req,
   Post,
   Body,
   Param,
   Delete,
+  Put,
   // UseGuards,
 } from '@nestjs/common';
 // import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -24,40 +24,27 @@ export class UsersController {
         data: await this.usersService.create(newParam),
       };
     } catch (err) {
-      console.log('errorbcvbcvbvcbb', err);
+      console.log('error', err);
     }
-  }
-
-  @Get('/me')
-  me(@Req() request) {
-    const userId = request.user.userId;
-    return this.usersService.findOne(userId);
   }
 
   @Get()
   findAll() {
-    try {
-      return {
-        message: 'Successfully find all user profiles',
-        data: this.usersService.findAll(),
-      };
-    } catch (err) {
-      console.log('error');
-    }
+    return this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  findOne(@Param('id') Id: string) {
+    return this.usersService.findOne(Id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(id, updateUserDto);
-  // }
+  @Put(':id')
+  update(@Param('id') Id: string, @Body() User: any) {
+    return this.usersService.update(Id, User);
+  }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  remove(@Param('id') Id: string) {
+    return this.usersService.remove(Id);
   }
 }
