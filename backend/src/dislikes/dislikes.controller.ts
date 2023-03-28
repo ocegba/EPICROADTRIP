@@ -8,8 +8,16 @@ export class DislikesController {
   constructor(private readonly dislikesService: DislikesService) {}
 
   @Post()
-  create(@Body() createDislikeDto: CreateDislikeDto) {
-    return this.dislikesService.create(createDislikeDto);
+  async create(@Body() param: any) {
+    const newParam = { ...param, status: true };
+    try {
+      return {
+        message: 'Successfully create one dislike',
+        data: await this.dislikesService.create(newParam),
+      };
+    } catch (err) {
+      console.log('error', err);
+    }
   }
 
   @Get()
@@ -22,13 +30,13 @@ export class DislikesController {
     return this.dislikesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDislikeDto: UpdateDislikeDto) {
-    return this.dislikesService.update(+id, updateDislikeDto);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateDislikeDto: any) {
+    return this.dislikesService.update(id, updateDislikeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.dislikesService.remove(+id);
+    return this.dislikesService.remove(id);
   }
 }
