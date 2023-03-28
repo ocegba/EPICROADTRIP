@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import peacevalleyImg from "../media/PeaceValley.jpg";
-import airplaneImg from "../media/Airplane.png";
 import GMap from "../components/GMap";
 import { Autocomplete } from "@react-google-maps/api";
 import mapImg from "../media/Map.png";
