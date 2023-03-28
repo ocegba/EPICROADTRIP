@@ -50,7 +50,7 @@ export class AuthService {
     values: { userAgent: string; ipAddress: string }
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
     const User = await this.userService.findByEmail(Email);
-
+    console.log("user in auth :", User)
     if (!User) {
       throw new NotFoundException(`L'utilisateur avec l'email ${Email} n'a pas été trouvé dans la base de donnée`);
 
