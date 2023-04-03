@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT } from "../services/auth";
 import { UPDATE_USER, DELETE_USER } from "../services/user";
 import { apiRequest } from "../services/api";
-import { GET_ALL_USERS } from "../services/admin";
+import { GET_ALL_USERS, PARCOURS_ADMIN } from "../services/admin";
 
 const SERVER_URL = `http://localhost:3000`;
 
@@ -59,12 +59,12 @@ export const appMiddleware = () => next => action => {
         );
         break;
       }
-      case GET_ALL_USERS:{
+      case PARCOURS_ADMIN:{
         next(
           apiRequest({
             url: `${SERVER_URL}/parcours-sauvegarder`,
             method: "GET",
-            type: GET_ALL_USERS
+            type: PARCOURS_ADMIN
           })
         );
         break;
