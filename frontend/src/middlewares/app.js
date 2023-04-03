@@ -70,7 +70,6 @@ export const appMiddleware = () => next => action => {
         break;
       }
       case REGISTER: {
-        console.log(action)
         next(
           apiRequest({
             url: `${SERVER_URL}/users`,

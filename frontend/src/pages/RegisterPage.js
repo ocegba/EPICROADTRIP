@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import { connect } from "react-redux";
 import { register } from "../services/auth";
 
-export default connect( ({ isLoading }) => ({ isLoading }), {register})
+export default connect( ({ isLoading, error }) => ({ isLoading, error }), {register})
 
 ((props) => {
   const [username, setUsername] = useState("");
@@ -38,12 +38,15 @@ export default connect( ({ isLoading }) => ({ isLoading }), {register})
 
       const user = { Username:username, Email: email, IdRole: "user", Password: password, Created_at: formattedDate}
       props.register(user);
-      console.log(user)
-      setSuccess(true);
-      setOpen(true);
-      setTimeout(function(){
-        window.location.href = "/login";
-      }, 15);
+
+      if (props.error !== undefined) {
+        setOpen(true);
+        setError(props.error?.data?.message);
+      } else {
+        setSuccess(true);
+        setOpen(true);
+        window.location.href = "/login"
+      }
     } catch (error) {
       setError("Une erreur est survenue. Veuillez réessayer plus tard.");
       setSuccess(false);

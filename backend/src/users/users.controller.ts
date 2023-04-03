@@ -6,6 +6,8 @@ import {
   Param,
   Delete,
   Put,
+  HttpStatus,
+  HttpException,
   // UseGuards,
 } from '@nestjs/common';
 // import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -14,19 +16,39 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
+  
   @Post()
   async create(@Body() param: any) {
     const newParam = { ...param, status: true };
     try {
+      const data = await this.usersService.create(newParam);
       return {
         message: 'Successfully create user profile',
-        data: await this.usersService.create(newParam),
+        data: data,
       };
     } catch (err) {
-      console.log('error', err);
+      if (err.response) {
+        throw new HttpException(
+          {
+            status: err.response.statusCode,
+            message: err.response.message,
+            error: err.response.error,
+          },
+          err.response.status,
+        );
+      } else {
+        throw new HttpException(
+          {
+            status: HttpStatus.INTERNAL_SERVER_ERROR,
+            message: 'Internal server error',
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
   }
+
+
 
   @Get()
   findAll() {

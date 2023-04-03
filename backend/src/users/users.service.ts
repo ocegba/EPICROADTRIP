@@ -19,6 +19,7 @@ export class UsersService {
     if (u) {
       throw new HttpException(
         {
+          statusCode: 500,
           message: 'Input data validation failed',
           error: 'name must be unique.',
         },
@@ -28,6 +29,7 @@ export class UsersService {
     if (email) {
       throw new HttpException(
         {
+          statusCode: 500,
           message: 'Input data validation failed',
           error: 'email must be unique.',
         },
@@ -37,6 +39,7 @@ export class UsersService {
     if (!Password) {
       throw new HttpException(
         {
+          statusCode: 500,
           message: 'Input data validation failed',
           error: 'password is required.',
         },
