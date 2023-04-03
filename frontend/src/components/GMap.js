@@ -11,9 +11,20 @@ const initialCoordinates = {
   lng: -38.523,
 };
 
-function GMap({ location }) {
+function GMap({ location, onGMValue }) {
   const [mapCenter, setMapCenter] = useState(initialCoordinates);
   const [mapZoom, setMapZoom] = useState(16);
+  const [coordinates, setCoordinates] = useState({});
+
+  function clickOnMap(e) {
+    const cLat = e.latLng.lat();
+    const cLng = e.latLng.lng();
+    setCoordinates({
+      lat: cLat,
+      lng: cLng,
+    });
+    onGMValue(coordinates);
+  }
 
   useEffect(() => {
     if (location) {
@@ -30,6 +41,7 @@ function GMap({ location }) {
       mapContainerStyle={containerStyle}
       center={mapCenter}
       zoom={mapZoom}
+      onClick={(e) => clickOnMap(e)}
     ></GoogleMap>
   );
 }
