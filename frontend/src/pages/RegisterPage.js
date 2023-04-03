@@ -6,25 +6,59 @@ import Alert from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 
 import { connect } from "react-redux";
+import { register } from "../services/auth";
 
-export default connect(
-  ({ isLoading }) => ({ isLoading }),
-  {}
-)((props) => {
+export default connect( ({ isLoading }) => ({ isLoading }), {register})
+
+((props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const dateString = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+  const date = new Date(Date.parse(dateString));
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // Notez que getMonth() renvoie les mois de 0 à 11, d'où l'ajout de 1 ici.
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
 
   const submitForm = () => {
-    if (email === "" || password === "") {
-      setError("Champs requis");
-      return;
+    try {
+      if (email === "" || password === "") {
+        setError("Champs requis");
+        return;
+      }
+      const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+      const user = { Username:username, Email: email, IdRole: "user", Password: password, Created_at: formattedDate}
+      props.register(user);
+      console.log(user)
+      setSuccess(true);
+      setOpen(true);
+      setTimeout(function(){
+        window.location.href = "/login";
+      }, 15);
+    } catch (error) {
+      setError("Une erreur est survenue. Veuillez réessayer plus tard.");
+      setSuccess(false);
+      setOpen(true);
     }
-    //const user = { Email: email, Password: password }
-    //props.login(user);
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+    setError("");
+    setSuccess("");
+  };
   return (
     <div className="RegisterPage">
       <div className="Formulaire">
@@ -47,8 +81,7 @@ export default connect(
             className="form-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            inputProps={{ pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" }}
-            helperText="Veuillez entrer une adresse e-mail valide"
+
           />
 
           <label id="password-label">Mot de passe</label>
@@ -59,8 +92,6 @@ export default connect(
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            inputProps={{ pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})" }}
-            helperText="Le mot de passe doit comporter au moins 8 caractères, avec au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial"
           />
 
           <Button
@@ -77,6 +108,11 @@ export default connect(
             Vous êtes déjà inscrit ?{" "}
             <a href="/login">Identifiez-vous ici</a>
           </p>
+          {success && (
+            <Alert onClose={handleClose} severity="success">
+              Vous êtes inscrit vous allez être redirigé d'identification !
+            </Alert>
+          )}
           {error && (
             <Alert severity="error" onClick={() => setError(null)}>
               {props.error || error}

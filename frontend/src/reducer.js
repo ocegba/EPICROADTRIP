@@ -1,6 +1,6 @@
 import { SET_LOADER } from "./services/ui";
 import { API_SUCCESS, API_ERROR } from "./services/api";
-import { LOGIN, LOGOUT } from "./services/auth";
+import { LOGIN, LOGOUT, REGISTER } from "./services/auth";
 import { UPDATE_USER, DELETE_USER } from "./services/user";
 import { GET_ALL_USERS, PARCOURS_ADMIN } from "./services/admin";
 
@@ -42,6 +42,9 @@ export default (
         case PARCOURS_ADMIN:
           const parcoursAdmin = action.params.data
           return { ...state, parcoursAdmin: parcoursAdmin};
+        case REGISTER:
+          const newUser = action.payload;
+          return { ...state, ...newUser};
       }
     case API_ERROR:
       return { ...state, error: action.payload };
@@ -53,6 +56,7 @@ export default (
       localStorage.removeItem("isAdmin");
       localStorage.removeItem("refreshToken");
       return { ...state, isAuthUser: false, user: {} };
+
       default:
         return state;
   }
