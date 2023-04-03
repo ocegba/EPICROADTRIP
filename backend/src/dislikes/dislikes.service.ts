@@ -1,9 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Dislike } from './entities/dislike.entity';
 import { CreateDislikeDto } from './dto/create-dislike.dto';
 import { UpdateDislikeDto } from './dto/update-dislike.dto';
 
+
 @Injectable()
 export class DislikesService {
+  constructor(
+    @InjectRepository(Dislike)
+    private readonly dislikeRepository: Repository<Dislike>,
+  ) {}
+
+
   async create(createDislikeDto: any): Promise<CreateDislikeDto[]> {
     const { DisLike } = createDislikeDto;
     console.log(DisLike);
