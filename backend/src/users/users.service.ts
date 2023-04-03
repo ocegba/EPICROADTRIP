@@ -1,4 +1,9 @@
-import { Injectable, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -70,7 +75,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User with ID "${Id}" not found`);
     }
-    return user
+    return user;
   }
 
   async update(Id: string, data: any): Promise<any> {
