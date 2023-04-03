@@ -24,7 +24,7 @@ function HomePage() {
           </h1>
           {/* <input type="search" placeholder="Où voulez-vous aller ?"></input> */}
 
-          <Autocomplete
+          {/* <Autocomplete
             onLoad={(autocomplete) => setAutocomplete(autocomplete)}
             onPlaceChanged={() => {
               setValueLocation(autocomplete.getPlace());
@@ -35,7 +35,7 @@ function HomePage() {
               type="text"
               placeholder="Où voulez-vous aller ?"
             />
-          </Autocomplete>
+          </Autocomplete> */}
           <button
             onClick={() => {
               mpIsOpen(true);
@@ -48,8 +48,8 @@ function HomePage() {
         <div title="srchMap">
           <button>burger</button>
           {/* <img src={mapImg} alt="Map"></img> */}
-          <GMap location={valueLocation} />
-        </div>
+{/*           <GMap location={valueLocation} />
+ */}        </div>
       )}
 
       <div>

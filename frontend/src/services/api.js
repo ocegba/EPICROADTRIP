@@ -5,10 +5,10 @@ export const API_ERROR = "API_ERROR";
 export const CANCEL_API_REQUEST = "CANCEL_API_REQUEST";
 
 // action creators
-export const apiRequest = ({ url, method, data }) => {
+export const apiRequest = ({ url, method, data, type }) => {
   return {
     type: API_REQUEST,
-    meta: { url, method },
+    meta: { url, method, type },
     data: data,
   };
 };
@@ -19,9 +19,10 @@ export const cancelApiRequest = () => {
   };
 };
 
-export const apiSuccess = ({ response, params }) => ({
+export const apiSuccess = ({ response, params, meta }) => ({
   type: API_SUCCESS,
   payload: response,
+  meta: meta,
   params: params
 });
 

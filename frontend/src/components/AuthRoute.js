@@ -7,7 +7,7 @@ const AuthRoute = (props) => {
 
   if (type === "guest" && isAuthUser && user.IdRole ==="user") return <Navigate to="/profil" />;
   else if (type === "guest" && isAuthUser && user.IdRole ==="admin") return <Navigate to="/admin" />;
-  else if (type === "private" && !isAuthUser) return <Navigate to="/" />;
+  else if (type === "private" && !isAuthUser) return <Navigate to="/login" />;
 
   return children
 };

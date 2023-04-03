@@ -7,15 +7,17 @@ export const apiMiddleware = ({ dispatch }) => next => action => {
 
   if (action.type === API_REQUEST) {
     dispatch(setLoader(true));
-    const { url, method } = action.meta;
+
+    const { url, method, type } = action.meta;
     const { data } = action;
 
     axios({
       method,
       url,
+      type,
       data
     })
-      .then((response) => dispatch(apiSuccess({ response: data, params: response })))
+      .then((response) => dispatch(apiSuccess({ response: data, params: response, meta: type })))
       .catch(error => {
         dispatch(apiError({ error: error.response }));
       });

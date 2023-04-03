@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { logout } from "../services/auth";
 
 import logo from "../media/logo.png";
-import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 
 import IconButton from '@mui/material/IconButton';
@@ -28,12 +27,18 @@ class Navbar extends Component {
         </div>
         <div>
           <ul>
-            {this.props.isAuthUser ? (
+          {this.props.isAuthUser ? (
               <>
                 <li>
-                  <Link to="/profil">
-                    <Avatar src="/static/images/avatar/1.jpg" />
-                  </Link>
+                  {this.props.isAdmin ? (
+                    <Link to="/admin">
+                      <Avatar src="/static/images/avatar/1.jpg" />
+                    </Link>
+                  ) : (
+                    <Link to="/profil">
+                      <Avatar src="/static/images/avatar/1.jpg" />
+                    </Link>
+                  )}
                 </li>
                 <li>
                   <IconButton aria-label="delete"  onClick={this.props.logout}>
@@ -58,6 +63,6 @@ class Navbar extends Component {
   }
 }
 
-export default connect(({ isAuthUser }) => ({ isAuthUser }), { logout })(
+export default connect(({ isAuthUser, isAdmin }) => ({ isAuthUser, isAdmin }), { logout })(
   Navbar
 );

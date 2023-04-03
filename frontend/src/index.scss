@@ -236,8 +236,8 @@ footer {
 
   .SideBar {
     width: 100%;
-    height:800px;
-    max-width: 300px;
+    max-width: 150px;
+    height: 800px;
     padding: 20px;
     background-color: var(--background-div);
 
@@ -256,8 +256,9 @@ footer {
       font-weight: bold;
       cursor: pointer;
       align-items: center;
-      min-width: 300px;
       justify-content: space-between;
+      padding: 10px;
+      width: 100%;
 
       svg {
         margin-left: 5px;
@@ -275,7 +276,20 @@ footer {
       button {
         margin-bottom: 0;
         width: auto;
-        padding: 10px 20px;
+        padding:0px;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      max-width: 200px;
+
+      button {
+        padding: 0px;
+        font-size: small;
+      }
+
+      svg {
+        margin-left: 0px;
       }
     }
   }
@@ -296,5 +310,18 @@ footer {
 
   .delete-btn {
     background-color: var(--background-highlight);
+  }
+}
+
+.Adherents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .Adherents {
+    flex-direction: column;
+    align-items: center;
   }
 }

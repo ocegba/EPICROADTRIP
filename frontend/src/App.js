@@ -21,9 +21,18 @@ import { configureStore } from "@reduxjs/toolkit";
 import { appMiddleware } from "./middlewares/app";
 import { apiMiddleware } from "./middlewares/core";
 
+const isAuthUser = !!localStorage.getItem("isAuthUser");
+const isAdmin = localStorage.getItem("isAdmin");
+const user = JSON.parse(localStorage.getItem("user")) || {};
+const accessToken = JSON.parse(localStorage.getItem("accessToken")) || {};
+const refreshToken = JSON.parse(localStorage.getItem("refreshToken")) || {};
+
+const initialState = { isAuthUser, isAdmin, user, accessToken, refreshToken, isLoading: false, error: null };
+
 const store = configureStore({
   reducer,
   middleware: [appMiddleware, apiMiddleware],
+  preloadedState: initialState,
 });
 
 function App() {
