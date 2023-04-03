@@ -1,67 +1,92 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-
+import * as bcrypt from 'bcrypt';
+const saltRounds = 10;
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    {
-      Id: '336DA',
-      Username: 'Bob',
-      userId: 'hello',
-      Email: 'bob@gmail.com',
-      Password: 'bobPass',
-      RoleId: '336DA',
-      Created_at: new Date('2023-12-05'),
-    },
+  constructor(
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
+  ) {}
 
-    {
-      Id: '36fge',
-      Username: 'John',
-      userId: 'hello',
-      Email: 'john@gmail.com',
-      Password: 'johnPass',
-      RoleId: '336DA',
-      Created_at: new Date('2023-12-05'),
-    },
+  async create(user: any): Promise<User[]> {
+    const { Username, Password, Email } = user;
 
-    {
-      Id: '36PGE',
-      Username: 'Gary',
-      userId: 'hello',
-      Email: 'gary@gmail.com',
-      Password: 'garyPass',
-      RoleId: '336DA',
-      Created_at: new Date('2023-12-05'),
-    },
-  ];
-
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
-
-  findAll() {
-    return `This action returns all users`;
-  }
-
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} user`;
-  }
-
-  findByEmail(email: string): Promise<User | undefined> {
-    const user = this.users.find((user) => user.Email === email);
-    if (user) {
-      return Promise.resolve(user);
+    const u = await this.usersRepository.findOneBy({ Username });
+    const email = await this.usersRepository.findOneBy({ Email });
+    if (u) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'name must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    return undefined;
+    if (email) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'email must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    if (!Password) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'password is required.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    user.Password = await this.hashPassword(Password);
+    return await this.usersRepository.save(user);
+  }
+
+  async hashPassword(p_password: string): Promise<any> {
+    if (!p_password) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'password is required.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const salt = await bcrypt.genSalt(saltRounds);
+    return await bcrypt.hash(p_password, salt);
+  }
+
+  async findAll() {
+    return await this.usersRepository.find();
+  }
+
+  async findOne(Id: string): Promise<any> {
+    const user = await this.usersRepository.findOne({ where: { Id: Id } });
+    if (!user) {
+      throw new NotFoundException(`User with ID "${Id}" not found`);
+    }
+    return user;
+  }
+
+  async update(Id: string, data: any): Promise<any> {
+    return await this.usersRepository.update(Id, data);
+  }
+
+  async remove(Id: string): Promise<any> {
+    return await this.usersRepository.delete(Id);
+  }
+
+  async findByEmail(Email: string): Promise<User | undefined> {
+    return await this.usersRepository.findOneBy({ Email });
   }
 }

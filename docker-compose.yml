@@ -23,44 +23,37 @@ services:
       - "3000:3000"
     volumes:
       - ./backend/.:/app/.
-    command: bash -c "npm install && npm start"
+    command: bash -c "npm install && npm run start"
     networks:
       - T-WEB
     environment:
       ACCESS_SECRET: ${ACCESS_SECRET}
       REFRESH_SECRET: ${REFRESH_SECRET}
-    depends_on:
-      # set a dependency between your service and the database: this means that your application will not run if the db service is not running, but it doesn't assure you that the dabase will be ready to accept incoming connection (so your application could crash untill the db initializes itself)
-      ert-mysql:
-        condition: service_healthy
 
-  ert-mysql:
-    image: mariadb:10.3
+  ert-mariadb:
+    image: mariadb:latest
     container_name: ert-mariadb
-    volumes:
-      - mariadb:/var/lib/mysql/data
-      - ./SQL/EpicRoadTrip.sql:/docker-entrypoint-initdb.d/EpicRoadTrip.sql
-    environment:
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: EpicRoadTrip
     ports:
       - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: EpicRoadTrip
     networks:
       - T-WEB
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
 
-  ert-phpmyadmin:
-    container_name: ert-phpmyadmin
+  phpmyadmin:
     image: phpmyadmin
+    container_name: phpmyadmin
     restart: always
+    depends_on:
+      - ert-mariadb
     ports:
-      - 80:80
+      - "80:80"
     environment:
-      - PMA_ARBITRARY=1
+      PMA_HOST: ert-mariadb
     networks:
       - T-WEB
 

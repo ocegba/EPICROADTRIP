@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+
 import peacevalleyImg from "../media/PeaceValley.jpg";
 import GMap from "../components/GMap";
 import { Autocomplete } from "@react-google-maps/api";
 import mapImg from "../media/Map.png";
+import GMap from "../components/GMap";
+import { Autocomplete } from "@react-google-maps/api";
+import mapImg from "../media/Map.png";
 
+import Icon from "@mui/material/Icon";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import Icon from "@mui/material/Icon";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
