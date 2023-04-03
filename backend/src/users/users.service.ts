@@ -43,13 +43,12 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    user.password = await this.hashPassword(Password);
+    user.Password = await this.hashPassword(Password);
     return await this.usersRepository.save(user);
   }
 
   async hashPassword(p_password: string): Promise<any> {
     if (!p_password) {
-      console.log('helloooooo', p_password);
       throw new HttpException(
         {
           message: 'Input data validation failed',
