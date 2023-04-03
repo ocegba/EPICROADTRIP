@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 import RefreshToken from './entities/refresh-token.entity';
@@ -47,14 +47,18 @@ export class AuthService {
   async login(
     Email: string,
     Password: string,
-    values: { userAgent: string; ipAddress: string },
+    values: { userAgent: string; ipAddress: string }
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
     const User = await this.userService.findByEmail(Email);
+
     if (!User) {
-      return undefined;
+      throw new NotFoundException(`L'utilisateur avec l'email ${Email} n'a pas été trouvé dans la base de donnée`);
+
     }
+    // verify your user -- use argon2 for password hashing!!
     if (User.Password !== Password) {
-      return undefined;
+      throw new NotFoundException(`Mot de passe incorrect`);
+
     }
 
     return this.newRefreshAndAccessToken(User, values);
@@ -63,7 +67,7 @@ export class AuthService {
   private async newRefreshAndAccessToken(
     user: User,
     values: { userAgent: string; ipAddress: string },
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  ): Promise<{ accessToken: string; refreshToken: string; user : {} }> {
     const refreshObject = new RefreshToken({
       id:
         this.refreshTokens.length === 0
@@ -82,6 +86,7 @@ export class AuthService {
         },
         process.env.ACCESS_SECRET,
       ),
+      user: user
     };
   }
 
@@ -93,7 +98,7 @@ export class AuthService {
     }
     // delete refreshtoken from db
     this.refreshTokens = this.refreshTokens.filter(
-      (refreshToken) => refreshToken.id !== refreshToken.id,
+      (refresh) => refresh.id !== refreshToken.id,
     );
   }
 }

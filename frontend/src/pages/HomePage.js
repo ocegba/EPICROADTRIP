@@ -1,39 +1,67 @@
 import React, { useState } from "react";
+
 import peacevalleyImg from "../media/PeaceValley.jpg";
-import airplaneImg from "../media/Airplane.png";
-import GMap from "../components/GMap"
+import GMap from "../components/GMap";
+import { Autocomplete } from "@react-google-maps/api";
+import mapImg from "../media/Map.png";
 
-
-
-function affichMap() {
-  return (
-    <div title="srchMap">
-      <button>burger</button>
-      <GMap />
-    </div>    
-  );
-}
+import Icon from "@mui/material/Icon";
+import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 
 function HomePage() {
   const [mpOpen, mpIsOpen] = useState(false);
+  const [autocomplete, setAutocomplete] = useState(null);
+  const [valueLocation, setValueLocation] = useState("");
+
   return (
     <div>
-      {!mpOpen ? <div title="srchPlc">
-        <img src={peacevalleyImg} alt="Vallée Atmosphérique"></img>
-        <h1>Bienvenue sur Epic Road Trip, Planifiez vos voyages où découvrez ceux des autres !</h1>
-        <input type="search" placeholder="Où voulez-vous aller ?"></input>
-        <button on onClick={() => {
-          mpIsOpen(true);
-        }}>Valider</button>
-      </div> : affichMap() }
+      {!mpOpen ? (
+        <div title="srchPlc">
+          <img src={peacevalleyImg} alt="Vallée Atmosphérique"></img>
+          <h1>
+            Bienvenue sur Epic Road Trip, Planifiez vos voyages où découvrez
+            ceux des autres !
+          </h1>
+          {/* <input type="search" placeholder="Où voulez-vous aller ?"></input> */}
+
+          {/* <Autocomplete
+            onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+            onPlaceChanged={() => {
+              setValueLocation(autocomplete.getPlace());
+            }}
+          >
+            <input
+              id="txtqry"
+              type="text"
+              placeholder="Où voulez-vous aller ?"
+            />
+          </Autocomplete> */}
+          <button
+            onClick={() => {
+              mpIsOpen(true);
+            }}
+          >
+            Valider
+          </button>
+        </div>
+      ) : (
+        <div title="srchMap">
+          <button>burger</button>
+          {/* <img src={mapImg} alt="Map"></img> */}
+{/*           <GMap location={valueLocation} />
+ */}        </div>
+      )}
+
       <div>
-        <img src={airplaneImg} title="trvlIcon" />
-        <h3>Voyage</h3>
+        <div className="travel-entete">
+          <Icon aria-label="travel">
+            <FlightTakeoffIcon />
+          </Icon>
+          <h3>Voyage</h3>
+        </div>
       </div>
     </div>
   );
 }
 
 export default HomePage;
-
-
