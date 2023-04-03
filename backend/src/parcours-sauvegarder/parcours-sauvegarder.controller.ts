@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Patch, Param, Delete } from '@nestjs/common';
 import { ParcoursSauvegarderService } from './parcours-sauvegarder.service';
 import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
 import { UpdateParcoursSauvegarderDto } from './dto/update-parcours-sauvegarder.dto';
@@ -8,8 +8,16 @@ export class ParcoursSauvegarderController {
   constructor(private readonly parcoursSauvegarderService: ParcoursSauvegarderService) {}
 
   @Post()
-  create(@Body() createParcoursSauvegarderDto: CreateParcoursSauvegarderDto) {
-    return this.parcoursSauvegarderService.create(createParcoursSauvegarderDto);
+  async create(@Body() param: any) {
+    const newParam = { ...param, status: true };
+    try {
+      return {
+        message: 'Successfully create one like',
+        data: await this.parcoursSauvegarderService.create(newParam),
+      };
+    } catch (err) {
+      console.log('error', err);
+    }
   }
 
   @Get()
@@ -19,16 +27,16 @@ export class ParcoursSauvegarderController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.parcoursSauvegarderService.findOne(+id);
+    return this.parcoursSauvegarderService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateParcoursSauvegarderDto: UpdateParcoursSauvegarderDto) {
-    return this.parcoursSauvegarderService.update(+id, updateParcoursSauvegarderDto);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateLikeDto: any) {
+    return this.parcoursSauvegarderService.update(id, updateLikeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.parcoursSauvegarderService.remove(+id);
+    return this.parcoursSauvegarderService.remove(id);
   }
 }

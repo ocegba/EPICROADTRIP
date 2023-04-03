@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ParcoursSauvegarder } from './entities/parcours-sauvegarder.entity';
+//import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
 import { UpdateParcoursSauvegarderDto } from './dto/update-parcours-sauvegarder.dto';
+
 
 @Injectable()
 export class ParcoursSauvegarderService {
-  create(createParcoursSauvegarderDto: CreateParcoursSauvegarderDto) {
-    return 'This action adds a new parcoursSauvegarder';
+  constructor(
+    @InjectRepository(ParcoursSauvegarder)
+    private readonly parcourssauvegarderRepository: Repository<ParcoursSauvegarder>,
+  ) {}
+
+  async create(parcoursSauvegarder: any): Promise<ParcoursSauvegarder[]> {
+    const { UserId } = parcoursSauvegarder;
+    console.log(ParcoursSauvegarder);
+    const u = await this.parcourssauvegarderRepository.findOneBy({ UserId });
+    if (u) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'name must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return await this.parcourssauvegarderRepository.save(UserId);
   }
 
   findAll() {
-    return `This action returns all parcoursSauvegarder`;
+    return `This action returns all ParcoursSauvegarder`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parcoursSauvegarder`;
+  findOne(id: string) {
+    return `This action returns a #${id} ParcoursSauvegarder`;
   }
 
-  update(id: number, updateParcoursSauvegarderDto: UpdateParcoursSauvegarderDto) {
-    return `This action updates a #${id} parcoursSauvegarder`;
+  update(Id: string, data: any): Promise<any> {
+    return this.parcourssauvegarderRepository.update(Id, data);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} parcoursSauvegarder`;
+  async remove(Id: string): Promise<any> {
+    return await this.parcourssauvegarderRepository.delete(Id);
   }
 }
