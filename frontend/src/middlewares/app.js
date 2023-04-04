@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../services/auth";
+import { LOGIN, LOGOUT, REGISTER } from "../services/auth";
 import { UPDATE_USER, DELETE_USER } from "../services/user";
 import { apiRequest } from "../services/api";
 import { GET_ALL_USERS, PARCOURS_ADMIN } from "../services/admin";
@@ -65,6 +65,17 @@ export const appMiddleware = () => next => action => {
             url: `${SERVER_URL}/parcours-sauvegarder`,
             method: "GET",
             type: PARCOURS_ADMIN
+          })
+        );
+        break;
+      }
+      case REGISTER: {
+        next(
+          apiRequest({
+            url: `${SERVER_URL}/users`,
+            method: "POST",
+            data: action.payload,
+            type: REGISTER
           })
         );
         break;
