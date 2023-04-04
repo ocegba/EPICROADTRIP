@@ -10,7 +10,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 export class RolesService {
   constructor(
     @InjectRepository(Role)
-    private readonly createRoleDto: Repository<CreateRoleDto>,
+    private readonly roleRepository: Repository<CreateRoleDto>,
   ) {}
 
   async create(role: any): Promise<Role[]> {

@@ -12,7 +12,7 @@ export class ParcoursSauvegarderController {
     const newParam = { ...param, status: true };
     try {
       return {
-        message: 'Successfully create one like',
+        message: 'Successfully create one ParcoursSauvegarder',
         data: await this.parcoursSauvegarderService.create(newParam),
       };
     } catch (err) {
