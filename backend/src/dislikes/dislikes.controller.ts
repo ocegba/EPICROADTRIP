@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DislikesService } from './dislikes.service';
 import { CreateDislikeDto } from './dto/create-dislike.dto';
 import { UpdateDislikeDto } from './dto/update-dislike.dto';
