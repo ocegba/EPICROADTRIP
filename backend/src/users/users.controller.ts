@@ -16,7 +16,7 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  
+
   @Post()
   async create(@Body() param: any) {
     const newParam = { ...param, status: true };
@@ -47,8 +47,6 @@ export class UsersController {
       }
     }
   }
-
-
 
   @Get()
   findAll() {

@@ -10,26 +10,35 @@ import Snackbar from "@mui/material/Snackbar";
 
 import { login } from "../services/auth";
 
-export default connect(({ isLoading, error }) => ({ isLoading, error }), {
-  login,
-})((props) => {
+const LoginPage = ({ login, errorReq }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
 
-  const submitForm = () => {
+  async function submitForm({ login, errorReq }) {
+
     const user = { Email: email, Password: password };
     if (email === "" || password === "") {
       setError("Veuillez remplir tous les champs.");
       return;
     }
 
-    props.login({ user });
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Adresse e-mail invalide");
+      return;
+    }
 
-    if (props.error !== undefined) {
+    try {
+      await login({user});
+    } catch (error) {
       setOpen(true);
-      setError(props.error?.data?.message);
+      setError(error);
+    }
+
+    if (errorReq !== undefined) {
+      setOpen(true);
+      setError(errorReq?.message);
     }
 
   };
@@ -48,7 +57,10 @@ export default connect(({ isLoading, error }) => ({ isLoading, error }), {
         <h1>Welcome back!</h1>
         <h3>Entrez vos informations afin de vous connecter</h3>
 
-        <form>
+        <form onSubmit={(e) => {
+            e.preventDefault();
+            submitForm({ login, errorReq });
+          }}>
           <label id="email-label">Email</label>
           <TextField
             variant="outlined"
@@ -69,17 +81,17 @@ export default connect(({ isLoading, error }) => ({ isLoading, error }), {
           />
 
           <Button
+            type="submit"
             variant="contained"
             color="primary"
             fullWidth
             className="btn-ident"
             size="large"
-            onClick={submitForm}
           >
             S'identifier
           </Button>
           <p>
-            Vous n'êtes pas inscrit ? <a href="/register">Inscrivez-vous ici</a>
+            Vous n'êtes pas inscrit ? <a href="/login">Inscrivez-vous ici</a>
           </p>
         </form>
       </div>
@@ -97,4 +109,10 @@ export default connect(({ isLoading, error }) => ({ isLoading, error }), {
       </div>
     </div>
   );
+};
+
+const mapStateToProps = (state) => ({
+  errorReq: state.error?.data,
 });
+
+export default connect(mapStateToProps, { login })(LoginPage);

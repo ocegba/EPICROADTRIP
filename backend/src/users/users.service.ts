@@ -19,9 +19,9 @@ export class UsersService {
     if (u) {
       throw new HttpException(
         {
-          statusCode: 500,
-          message: 'Input data validation failed',
-          error: 'name must be unique.',
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Username must be unique. Username existe déjà dans la base de donnée.',
+          error: 'Input data validation failed',
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -29,9 +29,9 @@ export class UsersService {
     if (email) {
       throw new HttpException(
         {
-          statusCode: 500,
-          message: 'Input data validation failed',
-          error: 'email must be unique.',
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Email must be unique. Email existe déjà dans la base de donnée.',
+          error: 'Input data validation failed',
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -39,9 +39,9 @@ export class UsersService {
     if (!Password) {
       throw new HttpException(
         {
-          statusCode: 500,
-          message: 'Input data validation failed',
-          error: 'password is required.',
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Password is required. Mot de passe requis.',
+          error: 'Input data validation failed',
         },
         HttpStatus.BAD_REQUEST,
       );

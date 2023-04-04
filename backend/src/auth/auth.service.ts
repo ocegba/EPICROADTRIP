@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 import RefreshToken from './entities/refresh-token.entity';
 import { sign, verify } from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -55,10 +56,11 @@ export class AuthService {
       throw new NotFoundException(`L'utilisateur avec l'email ${Email} n'a pas été trouvé dans la base de donnée`);
 
     }
-    // verify your user -- use argon2 for password hashing!!
-    if (User.Password !== Password) {
-      throw new NotFoundException(`Mot de passe incorrect`);
 
+    const passwordMatches = await bcrypt.compare(Password, User.Password);
+
+    if (!passwordMatches) {
+      throw new NotFoundException(`Mot de passe incorrect`);
     }
 
     return this.newRefreshAndAccessToken(User, values);

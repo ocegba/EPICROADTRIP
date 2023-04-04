@@ -43,8 +43,7 @@ export default (
           const parcoursAdmin = action.params.data
           return { ...state, parcoursAdmin: parcoursAdmin};
         case REGISTER:
-          const newUser = action.payload;
-          return { ...state, ...newUser};
+          return { ...state, statusRequest: action.params.data };
       }
     case API_ERROR:
       return { ...state, error: action.payload };
