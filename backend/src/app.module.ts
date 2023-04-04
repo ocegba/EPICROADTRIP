@@ -15,7 +15,6 @@ import { DislikesModule } from './dislikes/dislikes.module';
     UsersModule,
     AuthModule,
     RolesModule,
-    UsersModule,
     ParcoursSauvegarderModule,
     LikesModule,
     DislikesModule,

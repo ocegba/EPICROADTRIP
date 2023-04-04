@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--background);
 }
 
 code {
@@ -13,54 +14,314 @@ code {
 }
 
 :root {
-  --background-color: #edf2f7;
+  --background-div: white;
+  --background: #f4f5f7f0;
   --background-section: white;
   --backgroung-object: blue;
-}
-[data-theme="light"] {
-  --background-color: #edf2f7;
-  --background-section: white;
-  --background-header: white;
-  --backgroung-object: blue;
-  --color-text-1: black;
-  --background-table: white;
-  --background-border: #e4e4e4;
-  --background-table-content: rgba(255, 255, 255, 0.685);
-  --color-text-btn: white;
-  --background-color-csv: #3f51b5;
-  --background-color-csv-hover: #2f3c88;
-  --background-color-success: #aed581;
-  --background-color-success-hover: #9ccc65;
-  --background-table-text: black;
-  --color-ligne-1: #4b4b4b;
-  --color-highlight: rgb(62, 78, 170, 0.12);
-  --color-text-2: #3f51b5;
-  --color-content: #3f51b5;
-  --background-panel: white;
-  --background-switch: rgba(0, 0, 0, 0.38);
-  --color-link: #0d6efd;
+  --color: #333;
+  --shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --background-highlight: #ff0404;
+  --text-highlight: #6532D1;
+  --btn-background: #6532D1;
 }
 
-[data-theme="dark"] {
-  --background-color: #494f6c;
-  --background-section: #1b1e2b;
-  --background-header: #1d202b;
-  --backgroung-object: blue;
-  --color-text-1: white;
-  --background-table: rgba(0, 0, 0);
-  --background-border: #1b1b1b;
-  --background-table-content: rgba(29, 32, 43, 0.51);
-  --color-text-btn: white;
-  --background-color-csv: #3f51b5;
-  --background-color-csv-hover: #2f3c88;
-  --background-color-success: #aed581;
-  --background-color-success-hover: #9ccc65;
-  --background-table-text: white;
-  --color-ligne-1: #b4b4b4;
-  --color-highlight: rgb(192, 174, 74, 0.12);
-  --color-text-2: #c0ae4a;
-  --color-content: #c0ae4a;
-  --background-panel: black;
-  --background-switch: whitesmoke;
-  --color-link: #fdee0d;
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  background-color: var(--background-div);
+  z-index: 99;
+  position: relative;
+
+  li a[name="Itinéraires"] {
+    text-decoration: none;
+    color: var(--color);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-right: 10px;
+      width: 35px;
+      height: 33.06px;
+    }
+
+    h1 {
+      margin-right: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    li {
+      list-style: none;
+      margin-right: 10px;
+      text-decoration: none;
+    }
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-right: 20px;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--color);
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    > div {
+      flex-basis: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+
+      img {
+        margin-bottom: 10px;
+      }
+    }
+
+    li {
+      margin-right: 0;
+    }
+  }
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  background-color: var(--background-div);
+  color: var(--color);
+  font-size: 14px;
+  font-weight: 500;
+  @media only screen and (max-width: 768px) {
+    footer {
+      flex-direction: column;
+      justify-content: center;
+      height: auto;
+      padding: 20px;
+      text-align: center;
+    }
+  }
+}
+
+.LoginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  .Formulaire {
+    width: 50%;
+    box-shadow: var(--shadow);
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--background-div);
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .btn-ident{
+      background-color: var(--btn-background);
+      margin-top: 20px;
+    }
+  }
+
+  .Image {
+    width: 50%;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      box-shadow: var(--shadow);
+      border-radius: 60px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+
+    .Formulaire,
+    .Image {
+      width: 100%;
+      padding: 0;
+      text-align: center;
+    }
+  }
+}
+
+.RegisterPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  .Formulaire {
+    width: 50%;
+    padding-right: 20px;
+    box-shadow: var(--shadow);
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--background-div);
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .btn-ident{
+      background-color: var(--btn-background);
+      margin-top: 20px;
+    }
+  }
+
+  .Image {
+    width: 50%;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      box-shadow: var(--shadow);
+      border-radius: 60px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+
+    .Formulaire,
+    .Image {
+      width: 100%;
+      padding: 0;
+      text-align: center;
+    }
+  }
+}
+
+.Profil {
+  display: flex;
+
+  .SideBar {
+    width: 100%;
+    max-width: 150px;
+    height: 800px;
+    padding: 20px;
+    background-color: var(--background-div);
+
+    .line {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--color);
+    }
+
+    button {
+      display: flex;
+      border: none;
+      transition: all 0.3s ease;
+      background-color: var(--background-div);
+      font-size: medium;
+      font-weight: bold;
+      cursor: pointer;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      width: 100%;
+
+      svg {
+        margin-left: 5px;
+      }
+
+      &.selected {
+        color: var(--text-highlight);
+      }
+    }
+
+    @media only screen and (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-around;
+
+      button {
+        margin-bottom: 0;
+        width: auto;
+        padding:0px;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      max-width: 200px;
+
+      button {
+        padding: 0px;
+        font-size: small;
+      }
+
+      svg {
+        margin-left: 0px;
+      }
+    }
+  }
+
+  > div {
+    width: 100%;
+    padding: 10px;
+
+    @media only screen and (min-width: 768px) {
+      width: 70%;
+    }
+  }
+
+  .edit-input{
+    background-color: var(--btn-background);
+    margin-bottom: 20px;
+  }
+
+  .delete-btn {
+    background-color: var(--background-highlight);
+  }
+}
+
+.Adherents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .Adherents {
+    flex-direction: column;
+    align-items: center;
+  }
 }

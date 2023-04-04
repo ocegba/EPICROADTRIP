@@ -1,69 +1,65 @@
 import React, { useState } from "react";
 
-function ItnFct() {
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import Icon from "@mui/material/Icon";
+
+import { connect } from "react-redux";
+import { updateUser, deleteUser } from "../services/user";
+import { logout } from "../services/auth";
+
+import Reglages from "../components/Reglages"
+
+const ItnFct = () => {
   return (
     <div>
       <h1>Mes itinéraires</h1>
-      <h3>Dans cette section, vous pouvez supprimer, imprimer ou publier les itinéraires</h3>
+      <h3>
+        Dans cette section, vous pouvez supprimer, imprimer ou publier les
+        itinéraires
+      </h3>
     </div>
   );
 }
 
-function Reglages() {
-  return (
-    <div>
-      <h1>Mes réglages</h1>
-      <h3>Dans cette section, vous pouvez éditer votre profil</h3>
+const Profil = ({user, updateUser, deleteUser, logout }) => {
+  const [itnOpen, setItnOpen] = useState(true);
+  const [regOpen, setRegOpen] = useState(false);
 
-      <div>
-      <label id="username-label">Username</label>
-        <input aria-labelledby="username-label" />
+  const handleItnClick = () => {
+    setItnOpen(true);
+    setRegOpen(false);
+  };
 
-        <label id="email-label">Email</label>
-        <input aria-labelledby="email-label" />
-
-        <label id="password-label">Mot de passe</label>
-        <input aria-labelledby="password-label" />
-
-        <button>Modifier</button>
-
-        <button>Supprimer mon compte</button>
-      </div>
-    </div>
-  );
-}
-
-function Profil() {
-  const [itnOpen, itnIsOpen] = useState(false);
-  const [regOpen, regIsOpen] = useState(false);
+  const handleRegClick = () => {
+    setItnOpen(false);
+    setRegOpen(true);
+  };
 
   return (
-    <div>
+    <div className="Profil">
       <div className="SideBar">
-        <div>
-          <button
-            onClick={() => {
-              itnIsOpen(true);
-              regIsOpen(false);
-            }}
-          >
-            Mes itinéraires
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              itnIsOpen(false);
-              regIsOpen(true);
-            }}
-          >
-            Mes réglages
-          </button>
-        </div>
+        <button className={itnOpen ? "selected" : ""} onClick={handleItnClick}>
+          Mes itinéraires
+          <Icon aria-label="travel">
+            <ArrowForwardIosRoundedIcon />
+          </Icon>
+        </button>
+        <div className="line"></div>
+        <button className={regOpen ? "selected" : ""} onClick={handleRegClick}>
+          Mes réglages
+          <Icon aria-label="travel">
+            <ArrowForwardIosRoundedIcon />
+          </Icon>
+        </button>
       </div>
-      {regOpen && !itnOpen ? <Reglages /> : <ItnFct />}
+      {itnOpen && <ItnFct />}
+      {regOpen && <Reglages ID={user.Id} updateUser={updateUser} deleteUser={deleteUser} logout={logout} />}
     </div>
   );
-}
+};
 
-export default Profil;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { updateUser, deleteUser, logout })(Profil);
