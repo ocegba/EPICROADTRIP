@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
@@ -48,13 +49,14 @@ export class AuthService {
   async login(
     Email: string,
     Password: string,
-    values: { userAgent: string; ipAddress: string }
+    values: { userAgent: string; ipAddress: string },
   ): Promise<{ accessToken: string; refreshToken: string } | undefined> {
     const User = await this.userService.findByEmail(Email);
 
     if (!User) {
-      throw new NotFoundException(`L'utilisateur avec l'email ${Email} n'a pas été trouvé dans la base de donnée`);
-
+      throw new NotFoundException(
+        `L'utilisateur avec l'email ${Email} n'a pas été trouvé dans la base de donnée`,
+      );
     }
 
     const passwordMatches = await bcrypt.compare(Password, User.Password);
@@ -69,7 +71,7 @@ export class AuthService {
   private async newRefreshAndAccessToken(
     user: User,
     values: { userAgent: string; ipAddress: string },
-  ): Promise<{ accessToken: string; refreshToken: string; user : {} }> {
+  ): Promise<{ accessToken: string; refreshToken: string; user: {} }> {
     const refreshObject = new RefreshToken({
       id:
         this.refreshTokens.length === 0
@@ -88,7 +90,7 @@ export class AuthService {
         },
         process.env.ACCESS_SECRET,
       ),
-      user: user
+      user: user,
     };
   }
 
