@@ -1,18 +1,14 @@
-import { Role } from 'src/roles/entities/role.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Trip } from 'src/parcours-sauvegarder/entities/parcours-sauvegarder.entity';
 @Entity()
 export class Like {
   @PrimaryGeneratedColumn()
   Id: string;
 
-  @OneToMany((type) => Role, (role) => role.Id)
-  @Column()
-  UserId: string;
+  @ManyToOne(() => User, (user) => user.likes)
+  user: User;
 
-  @Column()
-  ParcoursId: string;
-
-  @Column()
-  Like: boolean;
+  @ManyToOne(() => Trip, (trip) => trip.likes)
+  trip: Trip;
 }

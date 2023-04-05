@@ -1,22 +1,25 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ParcoursSauvegarder } from './entities/parcours-sauvegarder.entity';
+import { Trip } from './entities/parcours-sauvegarder.entity';
 //import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
-import { UpdateParcoursSauvegarderDto } from './dto/update-parcours-sauvegarder.dto';
-
 
 @Injectable()
 export class ParcoursSauvegarderService {
   constructor(
-    @InjectRepository(ParcoursSauvegarder)
-    private readonly parcourssauvegarderRepository: Repository<ParcoursSauvegarder>,
+    @InjectRepository(Trip)
+    private readonly parcourssauvegarderRepository: Repository<Trip>,
   ) {}
 
-  async create(parcoursSauvegarder: any): Promise<ParcoursSauvegarder[]> {
-    const { UserId } = parcoursSauvegarder;
-    console.log(ParcoursSauvegarder);
-    const u = await this.parcourssauvegarderRepository.findOneBy({ UserId });
+  async create(parcoursSauvegarder: any): Promise<Trip[]> {
+    const { Id } = parcoursSauvegarder;
+    console.log(Trip);
+    const u = await this.parcourssauvegarderRepository.findOneBy({ Id });
     if (u) {
       throw new HttpException(
         {
@@ -26,15 +29,21 @@ export class ParcoursSauvegarderService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    return await this.parcourssauvegarderRepository.save(UserId);
+    return await this.parcourssauvegarderRepository.save(parcoursSauvegarder);
   }
 
-  findAll() {
-    return `This action returns all ParcoursSauvegarder`;
+  async findAll() {
+    return await this.parcourssauvegarderRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} ParcoursSauvegarder`;
+  async findOne(Id: string): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.findOne({
+      where: { Id: Id },
+    });
+    if (!trip) {
+      throw new NotFoundException(`User with ID "${Id}" not found`);
+    }
+    return trip;
   }
 
   update(Id: string, data: any): Promise<any> {

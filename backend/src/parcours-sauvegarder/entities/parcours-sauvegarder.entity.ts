@@ -1,30 +1,45 @@
-import { Role } from 'src/roles/entities/role.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Like } from 'src/likes/entities/like.entity';
 @Entity()
-export class ParcoursSauvegarder {
-    @PrimaryGeneratedColumn()
-    Id: string;
+export class Trip {
+  @PrimaryGeneratedColumn()
+  Id: string;
 
-    @OneToMany(type => Role, role=> role.Id)
-    @Column()
-    UserId: string;
+  @ManyToOne(() => User, (user) => user.Id)
+  @Column()
+  UserIdCreated: string;
 
-    @Column()
-    Adresse: string;
+  @OneToMany(() => Like, (like) => like.trip)
+  likes: Like[];
 
-    @Column()
-    Drink: boolean;
+  @Column()
+  Adresse: string;
 
-    @Column()
-    Eat: boolean;
+  @Column()
+  Drink: boolean;
 
-    @Column()
-    Travel: boolean;
+  @Column()
+  Eat: boolean;
 
-    @Column()
-    Sleep: boolean;
+  @Column()
+  Travel: boolean;
 
-    @Column()
-    Enjoy: boolean;
+  @Column()
+  Sleep: boolean;
+
+  @Column()
+  Enjoy: boolean;
+
+  @Column()
+  Published: boolean;
+
+  @Column()
+  LikesNumbers: number;
 }

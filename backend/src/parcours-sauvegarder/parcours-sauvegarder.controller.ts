@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Put, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ParcoursSauvegarderService } from './parcours-sauvegarder.service';
-import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
-import { UpdateParcoursSauvegarderDto } from './dto/update-parcours-sauvegarder.dto';
 
 @Controller('parcours-sauvegarder')
 export class ParcoursSauvegarderController {
-  constructor(private readonly parcoursSauvegarderService: ParcoursSauvegarderService) {}
+  constructor(
+    private readonly parcoursSauvegarderService: ParcoursSauvegarderService,
+  ) {}
 
   @Post()
   async create(@Body() param: any) {

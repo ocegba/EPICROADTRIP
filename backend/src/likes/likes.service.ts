@@ -1,9 +1,7 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Like } from './entities/like.entity';
-import { CreateLikeDto } from './dto/create-like.dto';
-
 
 @Injectable()
 export class LikesService {
@@ -12,29 +10,22 @@ export class LikesService {
     private readonly likeRepository: Repository<Like>,
   ) {}
 
-
-  async create(createLikeDto: any): Promise<CreateLikeDto[]> {
+  async create(createLikeDto: any): Promise<Like[]> {
     const { Like } = createLikeDto;
     console.log(Like);
-    const u = await this.likeRepository.findOneBy({ Like });
-    if (u) {
-      throw new HttpException(
-        {
-          message: 'Input data validation failed',
-          error: 'name must be unique.',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
+    return await this.likeRepository.save(createLikeDto);
+  }
+
+  async findAll() {
+    return await this.likeRepository.find();
+  }
+
+  async findOne(Id: string): Promise<any> {
+    const like = await this.likeRepository.findOne({ where: { Id: Id } });
+    if (!like) {
+      throw new NotFoundException(`User with ID "${Id}" not found`);
     }
-    return await this.likeRepository.save(Like);
-  }
-
-  findAll() {
-    return `This action returns all likes`;
-  }
-
-  findOne(id: string) {
-    return `This action returns a #${id} like`;
+    return like;
   }
 
   update(Id: string, data: any): Promise<any> {

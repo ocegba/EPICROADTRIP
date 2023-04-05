@@ -9,7 +9,9 @@ describe('ParcoursSauvegarderService', () => {
       providers: [ParcoursSauvegarderService],
     }).compile();
 
-    service = module.get<ParcoursSauvegarderService>(ParcoursSauvegarderService);
+    service = module.get<ParcoursSauvegarderService>(
+      ParcoursSauvegarderService,
+    );
   });
 
   it('should be defined', () => {

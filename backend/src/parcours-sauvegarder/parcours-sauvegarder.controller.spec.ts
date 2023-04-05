@@ -11,7 +11,9 @@ describe('ParcoursSauvegarderController', () => {
       providers: [ParcoursSauvegarderService],
     }).compile();
 
-    controller = module.get<ParcoursSauvegarderController>(ParcoursSauvegarderController);
+    controller = module.get<ParcoursSauvegarderController>(
+      ParcoursSauvegarderController,
+    );
   });
 
   it('should be defined', () => {

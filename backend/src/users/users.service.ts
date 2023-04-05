@@ -25,7 +25,8 @@ export class UsersService {
       throw new HttpException(
         {
           statusCode: HttpStatus.BAD_REQUEST,
-          message: 'Username must be unique. Username existe déjà dans la base de donnée.',
+          message:
+            'Username must be unique. Username existe déjà dans la base de donnée.',
           error: 'Input data validation failed',
         },
         HttpStatus.BAD_REQUEST,
@@ -35,7 +36,8 @@ export class UsersService {
       throw new HttpException(
         {
           statusCode: HttpStatus.BAD_REQUEST,
-          message: 'Email must be unique. Email existe déjà dans la base de donnée.',
+          message:
+            'Email must be unique. Email existe déjà dans la base de donnée.',
           error: 'Input data validation failed',
         },
         HttpStatus.BAD_REQUEST,
