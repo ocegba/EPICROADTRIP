@@ -1,26 +1,76 @@
-import { Injectable } from '@nestjs/common';
-import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
-import { UpdateParcoursSauvegarderDto } from './dto/update-parcours-sauvegarder.dto';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Trip } from './entities/parcours-sauvegarder.entity';
+//import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
 
 @Injectable()
 export class ParcoursSauvegarderService {
-  create(createParcoursSauvegarderDto: CreateParcoursSauvegarderDto) {
-    return 'This action adds a new parcoursSauvegarder';
+  constructor(
+    @InjectRepository(Trip)
+    private readonly parcourssauvegarderRepository: Repository<Trip>,
+  ) {}
+
+  async create(parcoursSauvegarder: any): Promise<Trip[]> {
+    const { Id } = parcoursSauvegarder;
+    console.log(Trip);
+    const u = await this.parcourssauvegarderRepository.findOneBy({ Id });
+    if (u) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'name must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return await this.parcourssauvegarderRepository.save(parcoursSauvegarder);
   }
 
-  findAll() {
-    return `This action returns all parcoursSauvegarder`;
+  async findAll() {
+    return await this.parcourssauvegarderRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parcoursSauvegarder`;
+  async findAllPublicTrips(): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.find({
+      where: { Published: true },
+    });
+    if (!trip) {
+      throw new NotFoundException(`Trip Public not found`);
+    }
+    return trip;
   }
 
-  update(id: number, updateParcoursSauvegarderDto: UpdateParcoursSauvegarderDto) {
-    return `This action updates a #${id} parcoursSauvegarder`;
+  async findAllByUserId(userId: string): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.find({
+      where: { UserIdCreated: userId },
+    });
+    if (!trip) {
+      throw new NotFoundException(`Trip with User with ID "${userId}" not found`);
+    }
+    return trip;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} parcoursSauvegarder`;
+  async findOneByTripId(id: string): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.findOne({
+      where: { Id: id },
+    });
+    if (!trip) {
+      throw new NotFoundException(`Trip with ID "${id}" not found`);
+    }
+    return trip;
+  }
+
+  update(Id: string, data: any): Promise<any> {
+    return this.parcourssauvegarderRepository.update(Id, data);
+  }
+
+  async remove(Id: string): Promise<any> {
+    return await this.parcourssauvegarderRepository.delete(Id);
   }
 }

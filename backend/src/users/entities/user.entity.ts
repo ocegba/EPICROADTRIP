@@ -1,10 +1,18 @@
-import { Role } from 'src/roles/entities/role.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Trip } from 'src/parcours-sauvegarder/entities/parcours-sauvegarder.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Like } from 'src/likes/entities/like.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   Id: string;
+  // @OneToMany(() => Trip, (trip) => trip.UserIdCreated)
+  // @OneToMany(() => Like, (like) => like.UserId)
+  @OneToMany(() => Trip, (trip) => trip.UserIdCreated)
+  trips: Trip[];
+
+  @OneToMany(() => Like, (like) => like.user)
+  likes: Like[];
 
   @Column()
   Username: string;
@@ -14,9 +22,6 @@ export class User {
 
   @Column()
   Password: string;
-
-  @ManyToOne(() => Role, (role) => role)
-  role: Role;
 
   @Column()
   IdRole: string;

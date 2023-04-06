@@ -13,6 +13,14 @@ code {
     monospace;
 }
 
+main {
+  margin-bottom: 60px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --background-div: white;
   --background: #f4f5f7f0;
@@ -323,5 +331,58 @@ footer {
   .Adherents {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+.CardsUsersViews{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .MuiPaper-root {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Définir la largeur maximale de la carte */
+  @media only screen and (min-width: 600px) {
+    .MuiPaper-root {
+      max-width: 500px;
+    }
+  }
+
+  /* Ajouter une bordure à la carte */
+  .MuiPaper-root {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  /* Réduire la taille de la police pour les petits écrans */
+  @media only screen and (max-width: 480px) {
+    .MuiPaper-root .MuiTypography-h5 {
+      font-size: 1.2rem;
+    }
+    .MuiPaper-root .MuiTypography-body2 {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Réduire la taille de l'image pour les petits écrans */
+  @media only screen and (max-width: 600px) {
+    .MuiPaper-root .MuiCardMedia-root {
+      height: 100px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .TripCardUser {
+      flex-direction: column;
+    }
+
+    /* Modifier la largeur des cartes pour les écrans en mode portrait */
+    .MuiPaper-root {
+      width: 100%;
+    }
   }
 }
