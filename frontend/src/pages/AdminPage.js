@@ -9,10 +9,11 @@ import { connect } from "react-redux";
 import { updateUser, deleteUser } from "../services/user";
 import { get_all_users } from "../services/admin";
 import { logout } from "../services/auth";
+import { getAllPublicTrips } from "../services/trips";
 
 import Reglages from "../components/Reglages";
 import UserCards from "../components/Cards/UserCards";
-import ItnCard from "../components/Cards/ItnCard";
+import TripCardUser from "../components/Cards/PublicTripsCards";
 
 function AdhFct({ users, deleteUser, children }) {
   return (
@@ -42,19 +43,36 @@ function AdhFct({ users, deleteUser, children }) {
   );
 }
 
-function Travel() {
+function Travel({trips, deleteMyTrip}) {
+  console.log(trips)
   return (
     <div>
       <h1>Les itinéraires</h1>
-      <h3>Dans cette section, vous pouvez supprimer les itinéraires publiés</h3>
-      <div>
-        <ItnCard />
+      <h3>Dans cette section, vous pouvez supprimer les itinéraires publiés ou les imprimer</h3>
+      <div className="CardsUsersViews">
+        {trips && trips.length > 0 ? (
+          trips.map((trip) => (
+            <TripCardUser
+              key={trip.Id}
+              tripId={trip.Id}
+              adresse={trip.Adresse}
+              Drink={trip.Drink}
+              Eat={trip.Eat}
+              Sleep={trip.Sleep}
+              Enjoy={trip.Enjoy}
+              LikesNumbers={String(trip.LikesNumbers)}
+              deleteMyTrip={deleteMyTrip}
+            />
+          ))
+        ) : (
+          <div> Loading... </div>
+        )}
       </div>
     </div>
   );
 }
 
-const Admin = ({user, users, get_all_users, updateUser, deleteUser, logout, }) => {
+const Admin = ({user, users,trips, get_all_users, updateUser, deleteUser, logout, getAllPublicTrips, deleteMyTrip }) => {
   const [adhOpen, setAdhOpen] = useState(false);
   const [itnOpen, setItnOpen] = useState(false);
   const [regOpen, setRegOpen] = useState(false);
@@ -62,7 +80,8 @@ const Admin = ({user, users, get_all_users, updateUser, deleteUser, logout, }) =
 
   useEffect(() => {
     get_all_users();
-  }, [get_all_users, updateTrigger]);
+    getAllPublicTrips();
+  }, [getAllPublicTrips, get_all_users, updateTrigger]);
 
   const handleUpdateUsers = () => {
     setUpdateTrigger(!updateTrigger);
@@ -113,7 +132,7 @@ const Admin = ({user, users, get_all_users, updateUser, deleteUser, logout, }) =
         </button>
       </div>
       {itnOpen ? (
-        <Travel />
+        <Travel trips={trips} deleteMyTrip={deleteMyTrip}/>
       ) : regOpen ? (
         <Reglages ID={user.Id} updateUser={updateUser} deleteUser={deleteUser} logout={logout} />
       ) : (
@@ -130,6 +149,7 @@ const Admin = ({user, users, get_all_users, updateUser, deleteUser, logout, }) =
 const mapStateToProps = (state) => ({
   user: state.user,
   users: state.users,
+  trips: state.trip
 });
 
 export default connect(mapStateToProps, {
@@ -137,4 +157,5 @@ export default connect(mapStateToProps, {
   updateUser,
   deleteUser,
   logout,
+  getAllPublicTrips
 })(Admin);
