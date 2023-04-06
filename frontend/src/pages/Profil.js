@@ -1,29 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
+import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
 
 import { connect } from "react-redux";
 import { updateUser, deleteUser } from "../services/user";
 import { logout } from "../services/auth";
+import { deleteMyTrip, updateMyTrip, getTripByUserId } from "../services/trips";
+import { getLikesByUserId, deleteLikes } from "../services/likes";
 
-import Reglages from "../components/Reglages"
+import Reglages from "../components/Reglages";
+import TripCardUser from "../components/Cards/TripCardUser";
 
-const ItnFct = () => {
+const ItnFct = ({ trips, likedTrips, updateMyTrip, deleteMyTrip, children, deleteLikes }) => {
+
   return (
     <div>
       <h1>Mes itinéraires</h1>
       <h3>
         Dans cette section, vous pouvez supprimer, imprimer ou publier les
-        itinéraires
+        itinéraires {children}
       </h3>
+      <div className="CardsUsersViews">
+        {trips && trips.length > 0 ? (
+          trips.map((trip) => (
+            <TripCardUser
+              isItMine={true}
+              key={trip.Id}
+              tripId={trip.Id}
+              adresse={trip.Adresse}
+              Drink={trip.Drink}
+              Eat={trip.Eat}
+              Sleep={trip.Sleep}
+              Enjoy={trip.Enjoy}
+              Published={trip.Published}
+              LikesNumbers={String(trip.LikesNumbers)}
+              updateMyTrip={updateMyTrip}
+              deleteMyTrip={deleteMyTrip}
+            />
+          ))
+        ) : (
+          <div> Loading... </div>
+        )}
+      </div>
+
+      <h3>Voici les publications que vous avez aimer :</h3>
+      <div className="CardsUsersViews">
+        {likedTrips && likedTrips.length > 0 ? (
+            likedTrips.map((liked) => (
+              <TripCardUser
+                isItMine={false}
+                key={liked.Id}
+                idLike={liked.Id}
+                adresse={liked.trip.Adresse}
+                Drink={liked.trip.Drink}
+                Eat={liked.trip.Eat}
+                Sleep={liked.trip.Sleep}
+                Enjoy={liked.trip.Enjoy}
+                LikesNumbers={String(liked.trip.LikesNumbers)}
+                deleteLike={deleteLikes}
+              />
+            ))
+          ) : (
+            <div> Loading... </div>
+          )}
+      </div>
     </div>
   );
-}
+};
 
-const Profil = ({user, updateUser, deleteUser, logout }) => {
+const Profil = ({
+  user,
+  updateUser,
+  deleteUser,
+  logout,
+  trips,
+  likedTrips,
+  deleteMyTrip,
+  updateMyTrip,
+  getLikesByUserId,
+  getTripByUserId,
+  deleteLikes,
+}) => {
   const [itnOpen, setItnOpen] = useState(true);
   const [regOpen, setRegOpen] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const handleItnClick = () => {
     setItnOpen(true);
@@ -34,6 +97,15 @@ const Profil = ({user, updateUser, deleteUser, logout }) => {
     setItnOpen(false);
     setRegOpen(true);
   };
+
+  const handleUpdateUsers = () => {
+    setUpdateTrigger(!updateTrigger);
+  };
+
+  useEffect(() => {
+    getTripByUserId(user.Id);
+    getLikesByUserId(user.Id)
+  }, [getTripByUserId, getLikesByUserId, updateTrigger]);
 
   return (
     <div className="Profil">
@@ -52,14 +124,50 @@ const Profil = ({user, updateUser, deleteUser, logout }) => {
           </Icon>
         </button>
       </div>
-      {itnOpen && <ItnFct />}
-      {regOpen && <Reglages ID={user.Id} updateUser={updateUser} deleteUser={deleteUser} logout={logout} />}
+      {itnOpen && (
+        <ItnFct
+          ID={user.Id}
+          trips={trips}
+          updateMyTrip={updateMyTrip}
+          deleteMyTrip={deleteMyTrip}
+          likedTrips={likedTrips}
+          deleteLikes={deleteLikes}
+          children={
+            <IconButton
+              aria-label="refresh"
+              onClick={handleUpdateUsers}
+              size="large"
+            >
+              <RefreshOutlinedIcon />
+            </IconButton>
+          }
+        />
+      )}
+      {regOpen && (
+        <Reglages
+          ID={user.Id}
+          updateUser={updateUser}
+          deleteUser={deleteUser}
+          logout={logout}
+        />
+      )}
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  trips: state.trip,
+  likedTrips: state?.likes?.likes
 });
 
-export default connect(mapStateToProps, { updateUser, deleteUser, logout })(Profil);
+export default connect(mapStateToProps, {
+  updateUser,
+  deleteUser,
+  logout,
+  deleteMyTrip,
+  updateMyTrip,
+  getLikesByUserId,
+  getTripByUserId,
+  deleteLikes,
+})(Profil);
