@@ -32,9 +32,16 @@ export class LikesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.likesService.findOne(id);
+  findLikesById(@Param('id') id: string) {
+    return this.likesService.findLikesById(id);
   }
+
+  @Get('/user/:userId')
+  async findLikesByUserId(@Param('userId') userId: string) {
+    const likes = await this.likesService.findLikesByUserId(userId);
+    return { likes };
+  }
+
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateLikeDto: any) {

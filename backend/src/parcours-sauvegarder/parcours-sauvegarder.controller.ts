@@ -33,9 +33,19 @@ export class ParcoursSauvegarderController {
     return this.parcoursSauvegarderService.findAll();
   }
 
+  @Get('/trips')
+  findAllPublicTrip() {
+    return this.parcoursSauvegarderService.findAllPublicTrips();
+  }
+
+  @Get('/user/:id')
+  findAllByUserId(@Param('id') id: string) {
+    return this.parcoursSauvegarderService.findAllByUserId(id);
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parcoursSauvegarderService.findOne(id);
+  findOneByTrip(@Param('id') id: string) {
+    return this.parcoursSauvegarderService.findOneByTripId(id);
   }
 
   @Put(':id')

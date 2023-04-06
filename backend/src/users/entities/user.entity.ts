@@ -5,6 +5,7 @@ import { Like } from 'src/likes/entities/like.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
+  Id: string;
   // @OneToMany(() => Trip, (trip) => trip.UserIdCreated)
   // @OneToMany(() => Like, (like) => like.UserId)
   @OneToMany(() => Trip, (trip) => trip.UserIdCreated)
@@ -12,7 +13,6 @@ export class User {
 
   @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
-  Id: string;
 
   @Column()
   Username: string;

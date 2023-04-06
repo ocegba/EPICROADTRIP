@@ -36,12 +36,32 @@ export class ParcoursSauvegarderService {
     return await this.parcourssauvegarderRepository.find();
   }
 
-  async findOne(Id: string): Promise<any> {
-    const trip = await this.parcourssauvegarderRepository.findOne({
-      where: { Id: Id },
+  async findAllPublicTrips(): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.find({
+      where: { Published: true },
     });
     if (!trip) {
-      throw new NotFoundException(`User with ID "${Id}" not found`);
+      throw new NotFoundException(`Trip Public not found`);
+    }
+    return trip;
+  }
+
+  async findAllByUserId(userId: string): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.find({
+      where: { UserIdCreated: userId },
+    });
+    if (!trip) {
+      throw new NotFoundException(`Trip with User with ID "${userId}" not found`);
+    }
+    return trip;
+  }
+
+  async findOneByTripId(id: string): Promise<any> {
+    const trip = await this.parcourssauvegarderRepository.findOne({
+      where: { Id: id },
+    });
+    if (!trip) {
+      throw new NotFoundException(`Trip with ID "${id}" not found`);
     }
     return trip;
   }

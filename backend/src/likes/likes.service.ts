@@ -12,20 +12,40 @@ export class LikesService {
 
   async create(createLikeDto: any): Promise<Like[]> {
     const { Like } = createLikeDto;
-    console.log(Like);
     return await this.likeRepository.save(createLikeDto);
   }
 
-  async findAll() {
-    return await this.likeRepository.find();
+  async findAll(): Promise<Like[]> {
+    const likes = await this.likeRepository.createQueryBuilder('like')
+      .leftJoinAndSelect('like.user', 'user')
+      .leftJoinAndSelect('like.trip', 'trip')
+      .getMany();
+
+    return likes;
   }
 
-  async findOne(Id: string): Promise<any> {
-    const like = await this.likeRepository.findOne({ where: { Id: Id } });
+  async findLikesById(id: string): Promise<Like> {
+    const like = await this.likeRepository.createQueryBuilder('like')
+      .leftJoinAndSelect('like.user', 'user')
+      .leftJoinAndSelect('like.trip', 'trip')
+      .where('like.Id = :id', { id })
+      .getOne();
+
     if (!like) {
-      throw new NotFoundException(`User with ID "${Id}" not found`);
+      throw new NotFoundException(`Like with ID "${id}" not found`);
     }
+
     return like;
+  }
+
+  async findLikesByUserId(userId: string): Promise<Like[]> {
+    const likes = await this.likeRepository.createQueryBuilder('like')
+      .leftJoinAndSelect('like.user', 'user')
+      .leftJoinAndSelect('like.trip', 'trip')
+      .where('user.Id = :userId', { userId })
+      .getMany();
+
+    return likes;
   }
 
   update(Id: string, data: any): Promise<any> {
