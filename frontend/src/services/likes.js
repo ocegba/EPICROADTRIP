@@ -39,11 +39,12 @@ export const getLikesById = (Id) => {
   };
 };
 
-export const updateLikes = (id, userData) => {
+export const updateLikes = (tripId, userId, userData) => {
   return {
     type: UPDATE_LIKES,
     payload: {
-      id: id,
+      tripId: tripId,
+      userId: userId,
       userData: userData,
     },
   };

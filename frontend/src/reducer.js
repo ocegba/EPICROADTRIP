@@ -14,6 +14,7 @@ export default (
     refreshToken: JSON.parse(localStorage.getItem("refreshToken")) || {},
     isLoading: false,
     error: null,
+    userId: localStorage.getItem("userId") || null,
   },
   action
 ) => {
@@ -22,6 +23,7 @@ export default (
       switch (action.meta) {
         case LOGIN:
           localStorage.setItem("isAuthUser", true);
+          localStorage.setItem("userId", action.params.data.user.Id);
           localStorage.setItem(
             "accessToken",
             JSON.stringify(action.params.data.accessToken)
@@ -57,17 +59,17 @@ export default (
           return { ...state, statusRequest: action.params.data };
 
         case CREATE_MY_TRIP:
-          return { ...state, trip: action.params.data };
+          return { ...state, trips: action.params.data };
         case GET_TRIP_BY_ID:
-          return { ...state, trip: action.params.data };
+          return { ...state, trips: action.params.data };
         case GET_TRIP_BY_USER_ID:
-          return { ...state, trip: action.params.data };
+          return { ...state, trips: action.params.data };
         case UPDATE_MY_TRIP:
-          return { ...state, trip: action.params.data };
+          return { ...state, trips: action.params.data };
         case DELETE_MY_TRIP:
-          return { ...state, trip: action.params.data };
+          return { ...state, trips: action.params.data };
         case GET_ALL_PUBLIC_TRIPS:
-          return { ...state, trip: action.params.data };
+          return { ...state, trips: action.params.data };
 
         case CREATE_LIKES:
           return { ...state, likes: action.params.data };
@@ -81,7 +83,7 @@ export default (
           return { ...state, likes: action.params.data };
         case DELETE_LIKES:
           return { ...state, likes: action.params.data };
-      }
+        }
     case API_ERROR:
       return { ...state, error: action.payload };
     case SET_LOADER:
@@ -89,6 +91,7 @@ export default (
     case LOGOUT:
       localStorage.removeItem("accessToken");
       localStorage.removeItem("isAuthUser");
+      localStorage.removeItem("userId");
       localStorage.removeItem("isAdmin");
       localStorage.removeItem("refreshToken");
       return { ...state, isAuthUser: false, user: {} };
