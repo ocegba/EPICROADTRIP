@@ -37,7 +37,7 @@ function GMap({ location, onGMValue }) {
         lng: location.geometry.location.lng(),
       });
       setMapZoom(10)};
-      setMapStyles([      {        
+      setMapStyles([{        
         featureType: "poi",        
         stylers: [{ visibility: "off" }],
         },
