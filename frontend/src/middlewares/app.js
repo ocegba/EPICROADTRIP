@@ -190,7 +190,7 @@ export const appMiddleware = () => next => action => {
       case UPDATE_LIKES: {
         next(
           apiRequest({
-            url: `${SERVER_URL}/likes/${action.payload.id}`,
+            url: `${SERVER_URL}/likes/trip/${action.payload.tripId}/user/${action.payload.userId}`,
             method: "PUT",
             data: action.payload.userData,
             type: UPDATE_LIKES
