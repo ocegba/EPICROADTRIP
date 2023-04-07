@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
 import peacevalleyImg from "../media/PeaceValley.jpg";
 import { Autocomplete, GoogleMap} from "@react-google-maps/api";
+import mapImg from "../media/Map.png";
 import Icon from "@mui/material/Icon";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 function HomePage() {
   const [mpOpen, mpIsOpen] = useState(false);
   const [autocomplete, setAutocomplete] = useState(null);
+  const [valueLocation, setValueLocation] = useState("");
+  const [coordinates, setCoordinates] = useState({});
   const [GMap ,setGmap] = useState() 
   const MapStyle = [
     {
