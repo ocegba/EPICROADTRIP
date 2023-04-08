@@ -1,3 +1,7 @@
+import LRU from 'lru-cache';
+
+const cache = new LRU({ max: 10000 });
+
 // action types
 export const API_REQUEST = "API_REQUEST";
 export const API_SUCCESS = "API_SUCCESS";
@@ -19,12 +23,19 @@ export const cancelApiRequest = () => {
   };
 };
 
-export const apiSuccess = ({ response, params, meta }) => ({
-  type: API_SUCCESS,
-  payload: response,
-  meta: meta,
-  params: params
-});
+export const apiSuccess = ({ response, meta, params }) => {
+
+  if (meta === 'GET_ALL_PUBLIC_TRIPS') {
+    cache.set('publicTrips', response);
+  }
+
+  return {
+    type: API_SUCCESS,
+    meta: meta,
+    params: params,
+    payload: response
+  };
+};
 
 export const apiError = ({ error }) => ({
   type: API_ERROR,
