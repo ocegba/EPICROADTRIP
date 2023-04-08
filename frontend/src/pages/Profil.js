@@ -48,7 +48,8 @@ const ItnFct = ({ trips, likedTrips, updateMyTrip, deleteMyTrip, children, delet
 
       <h3>Voici les publications que vous avez aimer :</h3>
       <div className="CardsUsersViews">
-        {likedTrips && likedTrips.length > 0 ? (
+        { likedTrips ? (
+        likedTrips.length > 0 ? (
             likedTrips.map((liked) => (
               <TripCardUser
                 isItMine={false}
@@ -64,8 +65,11 @@ const ItnFct = ({ trips, likedTrips, updateMyTrip, deleteMyTrip, children, delet
               />
             ))
           ) : (
-            <div> Loading... </div>
-          )}
+            <div>Loading...</div>
+          )) : (
+            <div>Aucun résultat</div>
+          )
+        }
       </div>
     </div>
   );
