@@ -4,7 +4,7 @@ import { LOGIN, LOGOUT, REGISTER } from "./services/auth";
 import { UPDATE_USER, DELETE_USER } from "./services/user";
 import { GET_ALL_USERS, PARCOURS_ADMIN } from "./services/admin";
 import { CREATE_MY_TRIP, DELETE_MY_TRIP, GET_TRIP_BY_ID, GET_TRIP_BY_USER_ID,  UPDATE_MY_TRIP, GET_ALL_PUBLIC_TRIPS} from "./services/trips";
-import { CREATE_LIKES, GET_ALL_LIKES, GET_LIKES_BY_USERID, GET_LIKES_BY_ID, UPDATE_LIKES, DELETE_LIKES } from "./services/likes";
+import { CREATE_LIKES, GET_ALL_LIKES, GET_LIKES_BY_USERID, GET_LIKES_BY_ID, UPDATE_LIKES, DELETE_LIKES, GET_USER_LIKED_TRIP } from "./services/likes";
 
 export default (
   state = {
@@ -69,7 +69,7 @@ export default (
         case DELETE_MY_TRIP:
           return { ...state, trips: action.params.data };
         case GET_ALL_PUBLIC_TRIPS:
-          return { ...state, trips: action.params.data };
+          return { ...state, tripsLiked: action.params.data };
 
         case CREATE_LIKES:
           return { ...state, likes: action.params.data };
@@ -79,6 +79,8 @@ export default (
             return { ...state, likes: action.params.data };
         case GET_LIKES_BY_USERID:
             return { ...state, likes: action.params.data };
+        case GET_USER_LIKED_TRIP:
+          return { ...state, likedTrip:  {...action.params.data}.liked };
         case UPDATE_LIKES:
           return { ...state, likes: action.params.data };
         case DELETE_LIKES:

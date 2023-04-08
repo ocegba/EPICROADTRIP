@@ -41,9 +41,12 @@ export const getTripById = (id) => {
   };
 };
 
-export const getAllPublicTrips = () => {
+export const getAllPublicTrips = (userId) => {
   return {
     type: GET_ALL_PUBLIC_TRIPS,
+    payload: {
+      userId: userId
+    }
   }
 };
 

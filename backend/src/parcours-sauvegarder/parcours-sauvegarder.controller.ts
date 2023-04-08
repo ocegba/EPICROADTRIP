@@ -6,8 +6,10 @@ import {
   Put,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ParcoursSauvegarderService } from './parcours-sauvegarder.service';
+import { Trip } from './entities/parcours-sauvegarder.entity';
 
 @Controller('parcours-sauvegarder')
 export class ParcoursSauvegarderController {
@@ -34,8 +36,8 @@ export class ParcoursSauvegarderController {
   }
 
   @Get('/trips')
-  findAllPublicTrip() {
-    return this.parcoursSauvegarderService.findAllPublicTrips();
+  async findAllPublicTrips(@Query('userId') userId?: string): Promise<Trip[]> {
+    return this.parcoursSauvegarderService.findAllPublicTrips(userId);
   }
 
   @Get('/user/:id')

@@ -3,7 +3,7 @@ import { UPDATE_USER, DELETE_USER } from "../services/user";
 import { apiRequest } from "../services/api";
 import { GET_ALL_USERS, PARCOURS_ADMIN } from "../services/admin";
 import { CREATE_MY_TRIP, DELETE_MY_TRIP, GET_TRIP_BY_USER_ID, GET_TRIP_BY_ID, UPDATE_MY_TRIP, GET_ALL_PUBLIC_TRIPS } from "../services/trips";
-import { CREATE_LIKES, DELETE_LIKES, GET_ALL_LIKES, GET_LIKES_BY_ID, GET_LIKES_BY_USERID, UPDATE_LIKES } from "../services/likes";
+import { CREATE_LIKES, DELETE_LIKES, GET_ALL_LIKES, GET_LIKES_BY_ID, GET_LIKES_BY_USERID, GET_USER_LIKED_TRIP, UPDATE_LIKES } from "../services/likes";
 
 const SERVER_URL = `http://localhost:3000`;
 
@@ -117,7 +117,7 @@ export const appMiddleware = () => next => action => {
       case GET_ALL_PUBLIC_TRIPS: {
         next(
           apiRequest({
-            url: `${SERVER_URL}/parcours-sauvegarder/trips`,
+            url: `${SERVER_URL}/parcours-sauvegarder/trips?userId=${action.payload.userId}`,
             method: "GET",
             type: GET_ALL_PUBLIC_TRIPS
           })
@@ -183,6 +183,16 @@ export const appMiddleware = () => next => action => {
             url: `${SERVER_URL}/likes/user/${action.payload.id}`,
             method: "GET",
             type: GET_LIKES_BY_USERID
+          })
+        );
+        break;
+      }
+      case GET_USER_LIKED_TRIP:{
+        next(
+          apiRequest({
+            url: `${SERVER_URL}/likes/${action.payload.userId}/${action.payload.tripId}/liked`,
+            method: "GET",
+            type: GET_USER_LIKED_TRIP
           })
         );
         break;

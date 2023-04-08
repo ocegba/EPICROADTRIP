@@ -6,7 +6,7 @@ import {
   Body,
   Param,
   Delete,
-  NotFoundException 
+  NotFoundException,
 } from '@nestjs/common';
 import { LikesService } from './likes.service';
 
@@ -43,6 +43,12 @@ export class LikesController {
     return { likes };
   }
 
+/*   @Get(':userId/:tripId/liked')
+  async userLikedTrip(@Param('userId') userId: string, @Param('tripId') tripId: string): Promise<{ liked: boolean }> {
+    const liked = await this.likesService.userLikedTrip(userId, tripId);
+    return { liked };
+  } */
+  
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateLikeDto: any) {
@@ -56,7 +62,11 @@ export class LikesController {
     @Body() updateLikeDto: any,
   ) {
     try {
-      const like = await this.likesService.updateLike(tripId, userId, updateLikeDto);
+      const like = await this.likesService.updateLike(
+        tripId,
+        userId,
+        updateLikeDto,
+      );
       return { message: 'Like updated successfully', like };
     } catch (err) {
       if (err instanceof NotFoundException) {

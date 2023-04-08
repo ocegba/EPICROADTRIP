@@ -56,7 +56,12 @@ export class LikesService {
 
     return likes;
   }
-
+  
+/*   async userLikedTrip(userId: string, tripId: string): Promise<boolean> {
+    const like = await this.likeRepository.findOne({ where: { user: { Id: userId }, trip: { Id: tripId } } });
+    return !!like;
+  }
+   */
   update(Id: string, data: any): Promise<any> {
     return this.likeRepository.update(Id, data);
   }
