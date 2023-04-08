@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -7,11 +7,20 @@ import { logout } from "../services/auth";
 import logo from "../media/logo.png";
 import Avatar from "@mui/material/Avatar";
 
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-class Navbar extends Component {
-  render() {
+const Navbar = ({logout, isAuthUser, isAdmin}) => {
+
+  const handleLogout = () => {
+    try {
+      logout()
+      window.location.href="/login"
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
     return (
       <nav className="Navbar">
         <div className="logo">
@@ -27,10 +36,10 @@ class Navbar extends Component {
         </div>
         <div>
           <ul>
-          {this.props.isAuthUser ? (
+            {isAuthUser ? (
               <>
                 <li>
-                  {this.props.isAdmin ? (
+                  {isAdmin ? (
                     <Link to="/admin">
                       <Avatar src="/static/images/avatar/1.jpg" />
                     </Link>
@@ -41,7 +50,7 @@ class Navbar extends Component {
                   )}
                 </li>
                 <li>
-                  <IconButton aria-label="delete"  onClick={this.props.logout}>
+                  <IconButton aria-label="delete" onClick={handleLogout}>
                     <LogoutIcon />
                   </IconButton>
                 </li>
@@ -61,8 +70,10 @@ class Navbar extends Component {
       </nav>
     );
   }
-}
 
-export default connect(({ isAuthUser, isAdmin }) => ({ isAuthUser, isAdmin }), { logout })(
-  Navbar
-);
+const mapStateToProps = (state) => ({
+  isAuthUser: state.isAuthUser,
+  isAdmin: state.isAdmin,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
