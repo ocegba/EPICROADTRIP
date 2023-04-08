@@ -22,7 +22,8 @@ export class LikesService {
   }
 
   async findAll(): Promise<Like[]> {
-    const likes = await this.likeRepository.createQueryBuilder('like')
+    const likes = await this.likeRepository
+      .createQueryBuilder('like')
       .leftJoinAndSelect('like.user', 'user')
       .leftJoinAndSelect('like.trip', 'trip')
       .getMany();
@@ -31,7 +32,8 @@ export class LikesService {
   }
 
   async findLikesById(id: string): Promise<Like> {
-    const like = await this.likeRepository.createQueryBuilder('like')
+    const like = await this.likeRepository
+      .createQueryBuilder('like')
       .leftJoinAndSelect('like.user', 'user')
       .leftJoinAndSelect('like.trip', 'trip')
       .where('like.Id = :id', { id })
@@ -45,7 +47,8 @@ export class LikesService {
   }
 
   async findLikesByUserId(userId: string): Promise<Like[]> {
-    const likes = await this.likeRepository.createQueryBuilder('like')
+    const likes = await this.likeRepository
+      .createQueryBuilder('like')
       .leftJoinAndSelect('like.user', 'user')
       .leftJoinAndSelect('like.trip', 'trip')
       .where('user.Id = :userId', { userId })
@@ -58,51 +61,47 @@ export class LikesService {
     return this.likeRepository.update(Id, data);
   }
 
-  async updateLike(tripId: string, userId: string, updateLikeDto: any): Promise<Like> {
-    let like = await this.likeRepository.findOne({ where: { trip: { Id: tripId }, user: { Id: userId } } });
-    let isNewLike = false;
-  
-    if (!like) {
-      like = new Like();
-      const user = new User();
-      user.Id = userId;
-      like.user = user;
+  async updateLike(
+    tripId: string,
+    userId: string,
+    updateLikeDto: any,
+  ): Promise<void> {
+    const like = await this.likeRepository.findOne({ where: { trip: { Id: tripId }, user: { Id: userId } }});
+      if (!like) {
+        const newLike = new Like();
+        const user = new User();
+        user.Id = userId;
+        newLike.user = user;
 
-      const trip = new Trip();
-      trip.Id = tripId;
-      like.trip = trip;
+        const trip = new Trip();
+        trip.Id = tripId;
+        newLike.trip = trip;
+        await this.likeRepository.save(newLike);
 
-      isNewLike = true;
-    }
-  
-    const trip = await this.parcourssauvegarderRepository.findOne({ where: { Id: tripId } });
-    if (!trip) {
-      throw new NotFoundException(`Trip with ID ${tripId} not found`);
-    }
-  
-    let likeAddedOrRemoved = false;
-    if (updateLikeDto.isLiked) {
-      if (isNewLike) {
-        await this.likeRepository.save(like);
-        trip.LikesNumbers += 1;
-        likeAddedOrRemoved = true;
+        const tripById = await this.parcourssauvegarderRepository.findOne({
+          where: { Id: tripId },
+        });
+        if (!trip) {
+          throw new NotFoundException(`Trip with ID ${tripId} not found`);
+        }
+        tripById.LikesNumbers += 1;
+        await this.parcourssauvegarderRepository.save(tripById);
       }
-    } else {
-      if (!isNewLike) {
+     else {
+      if (like) {
         await this.likeRepository.remove(like);
+
+        const trip = await this.parcourssauvegarderRepository.findOne({
+          where: { Id: tripId },
+        });
+        if (!trip) {
+          throw new NotFoundException(`Trip with ID ${tripId} not found`);
+        }
         trip.LikesNumbers -= 1;
-        likeAddedOrRemoved = true;
+        await this.parcourssauvegarderRepository.save(trip);
       }
     }
-  
-    if (likeAddedOrRemoved) {
-      await this.parcourssauvegarderRepository.save(trip);
-    }
-  
-    return like;
   }
-  
-
 
   async remove(Id: string): Promise<any> {
     return await this.likeRepository.delete(Id);

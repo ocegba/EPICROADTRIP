@@ -49,8 +49,11 @@ export class LikesController {
     return this.likesService.update(id, updateLikeDto);
   }
 
-@Put('trip/:tripId/user/:userId')
-  async updateLike( @Param('tripId') tripId: string, @Param('userId') userId: string, @Body() updateLikeDto: any,
+  @Put('/trip/:tripId/user/:userId')
+  async updateLike(
+    @Param('tripId') tripId: string,
+    @Param('userId') userId: string,
+    @Body() updateLikeDto: any,
   ) {
     try {
       const like = await this.likesService.updateLike(tripId, userId, updateLikeDto);
