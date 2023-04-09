@@ -334,7 +334,7 @@ footer {
   }
 }
 
-.CardsUsersViews{
+.CardsUsersViews {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -391,7 +391,7 @@ footer {
   margin: 10px;
   padding: 20px;
 
-  .Filters{
+  .Filters {
     margin-block: 1em;
     display: flex;
     flex-direction: row;
@@ -411,7 +411,7 @@ footer {
     align-items: center;
     display: flex;
   }
-  
+
   select {
     margin-right: 1em;
   }
@@ -421,7 +421,7 @@ footer {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  
+
   @media (min-width: 1250px) {
     .Cards {
       grid-template-columns: repeat(3, 1fr);
@@ -462,20 +462,21 @@ footer {
 
     .SearchBar {
       input {
-      margin-top: 50px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: none;
-      transition: all 0.3s ease;
-      background-color: var(--background-div);
-      font-size: medium;
-      box-shadow: var(--shadow);
-      font-weight: bold;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 10px;}
+        margin-top: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: none;
+        transition: all 0.3s ease;
+        background-color: var(--background-div);
+        font-size: medium;
+        box-shadow: var(--shadow);
+        font-weight: bold;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 10px;
+      }
     }
 
     button {
@@ -494,5 +495,22 @@ footer {
       padding: 10px;
       border-radius: 10px;
     }
+  }
+
+  .listeCoordonnees {
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+  }
+}
+
+.ModalValidItn {
+
+  p {
+    display: flex;
+    flex-direction : column;
   }
 }
