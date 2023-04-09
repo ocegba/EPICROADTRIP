@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
+
 const containerStyle = {
   width: "1080px",
   height: "920px",
@@ -8,6 +9,7 @@ const containerStyle = {
 
 const initialCoordinates = {
   lat: -3.745,
+  lng: -38.523,
   lng: -38.523,
 };
 
