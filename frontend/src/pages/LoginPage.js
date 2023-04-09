@@ -10,7 +10,7 @@ import Snackbar from "@mui/material/Snackbar";
 
 import { login } from "../services/auth";
 
-const LoginPage = ({ login, errorReq }) => {
+const LoginPage = ({ login, errorReq, isAuthUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ const LoginPage = ({ login, errorReq }) => {
     }
 
     try {
-      await login({user});
+      await login({ user });
     } catch (error) {
       setOpen(true);
       setError(error);
@@ -40,8 +40,7 @@ const LoginPage = ({ login, errorReq }) => {
       setOpen(true);
       setError(errorReq?.message);
     }
-
-  };
+  }
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -51,16 +50,22 @@ const LoginPage = ({ login, errorReq }) => {
     setError("");
   };
 
+  if (isAuthUser) {
+    window.location.reload();
+  }
+
   return (
     <div className="LoginPage">
       <div className="Formulaire">
         <h1>Welcome back!</h1>
         <h3>Entrez vos informations afin de vous connecter</h3>
 
-        <form onSubmit={(e) => {
+        <form
+          onSubmit={(e) => {
             e.preventDefault();
-            submitForm({ login, errorReq });
-          }}>
+            submitForm({ login, errorReq, isAuthUser });
+          }}
+        >
           <label id="email-label">Email</label>
           <TextField
             variant="outlined"
@@ -113,6 +118,7 @@ const LoginPage = ({ login, errorReq }) => {
 
 const mapStateToProps = (state) => ({
   errorReq: state.error?.data,
+  isAuthUser: state.isAuthUser,
 });
 
 export default connect(mapStateToProps, { login })(LoginPage);

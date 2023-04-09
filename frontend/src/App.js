@@ -1,9 +1,7 @@
 import React from "react";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "./components/Layouts/BasicLayouts";
-
 import HomePage from "./pages/HomePage";
 import ItinerairesPage from "./pages/ItinerairesPage";
 import Profil from "./pages/Profil";
@@ -11,31 +9,21 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 
-import AuthRoute from "./components/AuthRoute.js";
-
 import { Provider } from "react-redux";
-
 import reducer from "./reducer";
 import { configureStore } from "@reduxjs/toolkit";
-
 import { appMiddleware } from "./middlewares/app";
 import { apiMiddleware } from "./middlewares/core";
-
-const isAuthUser = !!localStorage.getItem("isAuthUser");
-const isAdmin = localStorage.getItem("isAdmin");
-const user = JSON.parse(localStorage.getItem("user")) || {};
-const accessToken = JSON.parse(localStorage.getItem("accessToken")) || {};
-const refreshToken = JSON.parse(localStorage.getItem("refreshToken")) || {};
-
-const initialState = { isAuthUser, isAdmin, user, accessToken, refreshToken, isLoading: false, error: null };
 
 const store = configureStore({
   reducer,
   middleware: [appMiddleware, apiMiddleware],
-  preloadedState: initialState,
 });
 
 function App() {
+  const isAuthUser = !!localStorage.getItem("isAuthUser");
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -43,66 +31,78 @@ function App() {
           <Route
             path="/"
             element={
-              <AuthRoute path="/">
-                <Layout title="Bienvenue sur Epic Road Trip">
-                  <HomePage />
-                </Layout>
-              </AuthRoute>
+              <Layout title="Bienvenue sur Epic Road Trip">
+                <HomePage />
+              </Layout>
             }
           />
 
           <Route
             path="/itineraires"
             element={
-              <AuthRoute path="/itineraires">
-                <Layout title="Itinéraires">
-                  <ItinerairesPage />
-                </Layout>
-              </AuthRoute>
+              <Layout title="Itinéraires">
+                <ItinerairesPage />
+              </Layout>
             }
           />
 
           <Route
             path="/register"
             element={
-              <AuthRoute path="/register" type="guest">
+              isAuthUser ? (
+                <Navigate to="/profil" replace />
+              ) : (
                 <Layout title="S'inscrire">
                   <RegisterPage />
                 </Layout>
-              </AuthRoute>
+              )
             }
           />
 
           <Route
             path="/login"
             element={
-              <AuthRoute path="/login" type="guest">
+              isAuthUser ? (
+                <Navigate to="/profil" replace />
+              ) : (
                 <Layout title="S'identifier">
                   <LoginPage />
                 </Layout>
-              </AuthRoute>
+              )
             }
           />
 
           <Route
             path="/profil"
             element={
-              <AuthRoute path="/profil" type="private">
-                <Layout title="Profil">
-                  <Profil />
-                </Layout>
-              </AuthRoute>
+              isAuthUser ? (
+                isAdmin ? (
+                  <Navigate to="/admin" />
+                ) : (
+                  <Layout title="Profil">
+                    <Profil />
+                  </Layout>
+                )
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
 
           <Route
             path="/admin"
             element={
-              <AuthRoute path="/admin" type="private">
-                <Layout title="Administrateur">
-                  <AdminPage />
-                </Layout>
-              </AuthRoute>
+              isAuthUser ? (
+                isAdmin ? (
+                  <Layout title="Administrateur">
+                    <AdminPage />
+                  </Layout>
+                ) : (
+                  <Navigate to="/profil" />
+                )
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
         </Routes>

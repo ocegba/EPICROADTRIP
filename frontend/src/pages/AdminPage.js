@@ -72,7 +72,7 @@ function Travel({trips, deleteMyTrip}) {
   );
 }
 
-const Admin = ({user, users,trips, get_all_users, updateUser, deleteUser, logout, getAllPublicTrips, deleteMyTrip }) => {
+const Admin = ({userId, users,trips, get_all_users, updateUser, deleteUser, logout, getAllPublicTrips, deleteMyTrip }) => {
   const [adhOpen, setAdhOpen] = useState(false);
   const [itnOpen, setItnOpen] = useState(false);
   const [regOpen, setRegOpen] = useState(false);
@@ -105,7 +105,7 @@ const Admin = ({user, users,trips, get_all_users, updateUser, deleteUser, logout
     setRegOpen(true);
   };
 
-  const filteredUsers = users ? users.filter(ind => ind.Id !== user.Id) : [];
+  const filteredUsers = users ? users.filter(ind => ind.Id !== userId) : [];
 
   return (
     <div className="Profil">
@@ -134,7 +134,7 @@ const Admin = ({user, users,trips, get_all_users, updateUser, deleteUser, logout
       {itnOpen ? (
         <Travel trips={trips} deleteMyTrip={deleteMyTrip}/>
       ) : regOpen ? (
-        <Reglages ID={user.Id} updateUser={updateUser} deleteUser={deleteUser} logout={logout} />
+        <Reglages ID={userId} updateUser={updateUser} deleteUser={deleteUser} logout={logout} />
       ) : (
         <AdhFct users={filteredUsers} deleteUser={deleteUser} children={
           <IconButton aria-label="refresh" onClick={handleUpdateUsers} size="large">
@@ -147,9 +147,9 @@ const Admin = ({user, users,trips, get_all_users, updateUser, deleteUser, logout
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  userId: localStorage.getItem("userId"),
   users: state.users,
-  trips: state.trip
+  trips: state.trips
 });
 
 export default connect(mapStateToProps, {

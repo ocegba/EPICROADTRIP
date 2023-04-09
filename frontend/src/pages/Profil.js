@@ -48,7 +48,8 @@ const ItnFct = ({ trips, likedTrips, updateMyTrip, deleteMyTrip, children, delet
 
       <h3>Voici les publications que vous avez aimer :</h3>
       <div className="CardsUsersViews">
-        {likedTrips && likedTrips.length > 0 ? (
+        { likedTrips ? (
+        likedTrips.length > 0 ? (
             likedTrips.map((liked) => (
               <TripCardUser
                 isItMine={false}
@@ -64,15 +65,18 @@ const ItnFct = ({ trips, likedTrips, updateMyTrip, deleteMyTrip, children, delet
               />
             ))
           ) : (
-            <div> Loading... </div>
-          )}
+            <div>Loading...</div>
+          )) : (
+            <div>Aucun résultat</div>
+          )
+        }
       </div>
     </div>
   );
 };
 
 const Profil = ({
-  user,
+  userId,
   updateUser,
   deleteUser,
   logout,
@@ -103,8 +107,8 @@ const Profil = ({
   };
 
   useEffect(() => {
-    getTripByUserId(user.Id);
-    getLikesByUserId(user.Id)
+    getTripByUserId(userId);
+    getLikesByUserId(userId)
   }, [getTripByUserId, getLikesByUserId, updateTrigger]);
 
   return (
@@ -126,7 +130,7 @@ const Profil = ({
       </div>
       {itnOpen && (
         <ItnFct
-          ID={user.Id}
+          ID={userId}
           trips={trips}
           updateMyTrip={updateMyTrip}
           deleteMyTrip={deleteMyTrip}
@@ -145,7 +149,7 @@ const Profil = ({
       )}
       {regOpen && (
         <Reglages
-          ID={user.Id}
+          ID={userId}
           updateUser={updateUser}
           deleteUser={deleteUser}
           logout={logout}
@@ -156,8 +160,8 @@ const Profil = ({
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  trips: state.trip,
+  userId: localStorage.getItem("userId"),
+  trips: state.trips,
   likedTrips: state?.likes?.likes
 });
 

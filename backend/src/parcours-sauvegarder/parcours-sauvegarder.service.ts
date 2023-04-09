@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Trip } from './entities/parcours-sauvegarder.entity';
+import { Like } from 'src/likes/entities/like.entity';
 //import { CreateParcoursSauvegarderDto } from './dto/create-parcours-sauvegarder.dto';
 
 @Injectable()
@@ -14,6 +15,8 @@ export class ParcoursSauvegarderService {
   constructor(
     @InjectRepository(Trip)
     private readonly parcourssauvegarderRepository: Repository<Trip>,
+    @InjectRepository(Like)
+    private readonly likeRepository: Repository<Like>,
   ) {}
 
   async create(parcoursSauvegarder: any): Promise<Trip[]> {
@@ -36,7 +39,7 @@ export class ParcoursSauvegarderService {
     return await this.parcourssauvegarderRepository.find();
   }
 
-  async findAllPublicTrips(): Promise<any> {
+/*   async findAllPublicTrips(): Promise<any> {
     const trip = await this.parcourssauvegarderRepository.find({
       where: { Published: true },
     });
@@ -44,6 +47,27 @@ export class ParcoursSauvegarderService {
       throw new NotFoundException(`Trip Public not found`);
     }
     return trip;
+  } */
+
+  async findAllPublicTrips(userId?: string): Promise<Trip[]> {
+    let publicTrips = await this.parcourssauvegarderRepository.find({
+      where: { Published: true }
+    });
+  
+    if (userId) {
+      const userLikes = await this.likeRepository.createQueryBuilder('like').leftJoinAndSelect('like.user', 'user').leftJoinAndSelect('like.trip', 'trip').where('user.Id = :userId', { userId }).getMany();;
+  
+      console.log("publicTrips : ", publicTrips)
+      console.log("userLikes : ", userLikes)
+      publicTrips = publicTrips.map(trip => ({
+        ...trip,
+        isLiked: !!userLikes.find(like => like.trip ? like.trip.Id === trip.Id : false),
+      }));
+    }
+  
+    console.log(publicTrips); // Log the publicTrips array before returning it
+  
+    return publicTrips;
   }
 
   async findAllByUserId(userId: string): Promise<any> {
