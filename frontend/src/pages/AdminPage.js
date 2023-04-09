@@ -44,7 +44,6 @@ function AdhFct({ users, deleteUser, children }) {
 }
 
 function Travel({trips, deleteMyTrip}) {
-  console.log(trips)
   return (
     <div>
       <h1>Les itinéraires</h1>
@@ -57,6 +56,7 @@ function Travel({trips, deleteMyTrip}) {
               tripId={trip.Id}
               adresse={trip.Adresse}
               Drink={trip.Drink}
+              Travel={trip.Travel}
               Eat={trip.Eat}
               Sleep={trip.Sleep}
               Enjoy={trip.Enjoy}

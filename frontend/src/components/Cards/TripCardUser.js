@@ -12,12 +12,13 @@ import Icon from "@mui/material/Icon";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PublicIcon from "@mui/icons-material/Public";
 import PublicOffIcon from "@mui/icons-material/PublicOff";
-import { blue, grey, red, green, orange } from "@mui/material/colors";
+import { blue, grey, red, green, orange, deepPurple } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import LocalBarIcon from "@mui/icons-material/LocalBar";
 import HotelIcon from "@mui/icons-material/Hotel";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
+import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 
 import Geocoder from "../../services/googleRequest";
 
@@ -33,8 +34,22 @@ async function getAddress(adresse) {
       const lat = objetJS[i].lat;
       const lng = objetJS[i].lng;
       const response = await Geocoder.geocode(lat, lng);
-      const localisation = response.results[0].formatted_address;
-      results.push({ localisation });
+      const result = response.results[0];
+      const addressComponents = result.address_components;
+
+      const localisation = result.formatted_address;
+
+      let placeName = "";
+      for (let component of addressComponents) {
+        if (
+          component.types.includes("establishment") ||
+          component.types.includes("point_of_interest")
+        ) {
+          placeName = component.long_name;
+          break;
+        }
+      }
+      results.push({ placeName, localisation });
     }
   } catch (error) {
     console.error(error);
@@ -47,6 +62,7 @@ const TripCardUser = ({
   tripId,
   adresse,
   Drink,
+  Travel,
   Eat,
   Sleep,
   Enjoy,
@@ -152,6 +168,11 @@ const TripCardUser = ({
           <Typography gutterBottom variant="h6" component="div">
             {Drink ? (
               <LocalBarIcon sx={{ color: blue[500], padding: "2px" }} />
+            ) : (
+              ""
+            )}
+            {Travel ? (
+              <TimeToLeaveIcon sx={{ color: deepPurple[500], padding: "2px" }} />
             ) : (
               ""
             )}

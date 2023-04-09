@@ -5,6 +5,7 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
+import Typography from '@mui/material/Typography';
 
 import IconButton from "@mui/material/IconButton";
 import PrintIcon from "@mui/icons-material/Print";
@@ -33,7 +34,10 @@ const PrintTrip = React.forwardRef((props, ref) => {
               <TimelineDot />
               {index !== props.results.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
-            <TimelineContent>{step.localisation}</TimelineContent>
+            <Typography variant="h6" component="span">
+                    {step.placeName}
+                  </Typography>
+                  <Typography>{step.localisation}</Typography>
           </TimelineItem>
         ))}
       </Timeline>
