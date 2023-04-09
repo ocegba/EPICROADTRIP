@@ -29,8 +29,8 @@ main {
   --color: #333;
   --shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   --background-highlight: #ff0404;
-  --text-highlight: #6532D1;
-  --btn-background: #6532D1;
+  --text-highlight: #6532d1;
+  --btn-background: #6532d1;
 }
 
 .Navbar {
@@ -153,7 +153,7 @@ footer {
       margin-bottom: 20px;
     }
 
-    .btn-ident{
+    .btn-ident {
       background-color: var(--btn-background);
       margin-top: 20px;
     }
@@ -206,7 +206,7 @@ footer {
       margin-bottom: 20px;
     }
 
-    .btn-ident{
+    .btn-ident {
       background-color: var(--btn-background);
       margin-top: 20px;
     }
@@ -284,7 +284,7 @@ footer {
       button {
         margin-bottom: 0;
         width: auto;
-        padding:0px;
+        padding: 0px;
       }
     }
 
@@ -311,7 +311,7 @@ footer {
     }
   }
 
-  .edit-input{
+  .edit-input {
     background-color: var(--btn-background);
     margin-bottom: 20px;
   }
@@ -435,3 +435,64 @@ footer {
   }
 }
 
+.HomePage {
+  display: flex;
+  flex-direction: row;
+
+  .srchPlc {
+    position: relative;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      color: #fff;
+      text-align: center;
+    }
+
+    .SearchBar {
+      input {
+      margin-top: 50px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: none;
+      transition: all 0.3s ease;
+      background-color: var(--background-div);
+      font-size: medium;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 10px;}
+    }
+
+    button {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      border: none;
+      transition: all 0.3s ease;
+      background-color: var(--background-div);
+      font-size: medium;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  }
+}
