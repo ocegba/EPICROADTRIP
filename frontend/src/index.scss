@@ -507,6 +507,12 @@ footer {
   }
 }
 
+@media screen and (max-width: 1200px) {
+    .HomePage {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 .ModalValidItn {
 
   p {

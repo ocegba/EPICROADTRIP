@@ -450,7 +450,7 @@ const HomePage = ({ isAuthUser, userId, createMyTrip }) => {
               onClick={() => changeMapDisplay("Hôtels")}
             ></input>
           </fieldset>
-          <div>
+          <div className="googleMap">
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={mapCenter}
