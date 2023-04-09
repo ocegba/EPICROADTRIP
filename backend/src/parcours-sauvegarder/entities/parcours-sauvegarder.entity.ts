@@ -19,7 +19,7 @@ export class Trip {
   @OneToMany(() => Like, (like) => like.trip)
   likes: Like[];
 
-  @Column()
+  @Column({ length: 10000 })
   Adresse: string;
 
   @Column()

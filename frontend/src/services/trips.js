@@ -13,11 +13,10 @@ export const getAllTrip = () => {
   };
 };
 
-export const createMyTrip = (id, userData) => {
+export const createMyTrip = (userData) => {
   return {
     type: CREATE_MY_TRIP,
     payload: {
-      id: id,
       userData: userData,
     },
   };

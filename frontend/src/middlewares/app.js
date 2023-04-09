@@ -88,7 +88,7 @@ export const appMiddleware = () => next => action => {
           apiRequest({
             url: `${SERVER_URL}/parcours-sauvegarder`,
             method: "POST",
-            data: action.payload,
+            data: action.payload.userData,
             type: CREATE_MY_TRIP
           })
         );

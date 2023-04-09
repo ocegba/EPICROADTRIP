@@ -31,6 +31,7 @@ const ItinerairesPage = ({
   const [selectedEat, setSelectedEat] = useState(null);
   const [selectedSleep, setSelectedSleep] = useState(null);
   const [selectedEnjoy, setSelectedEnjoy] = useState(null);
+  const [selectedTravel, setSelectedTravel] = useState(null);
 
   const [likesNumberMin, setLikesNumberMin] = useState(0);
   const [likesNumberMax, setLikesNumberMax] = useState(0);
@@ -63,12 +64,16 @@ const ItinerairesPage = ({
           selectedEnjoy === null ||
           (selectedEnjoy === "true" && Boolean(trip.Enjoy)) ||
           (selectedEnjoy === "false" && !Boolean(trip.Enjoy));
+        let isSelectedTravel = 
+            selectedTravel === null ||
+            (selectedTravel === "true" && Boolean(trip.Travel)) ||
+            (selectedTravel === "false" && !Boolean(trip.Travel));
         return (
           likesInRange &&
           isSelectedDrink &&
           isSelectedEat &&
           isSelectedSleep &&
-          isSelectedEnjoy
+          isSelectedEnjoy && isSelectedTravel
         );
       });
       setFilteredTrips(allfilteredTrips);
@@ -94,12 +99,17 @@ const ItinerairesPage = ({
           let isSelectedEnjoy = selectedEnjoy === null ||
             (selectedEnjoy === "true" && Boolean(trip.Enjoy)) ||
             (selectedEnjoy === "false" && !Boolean(trip.Enjoy));
+
+          let isSelectedTravel = selectedTravel === null ||
+            (selectedTravel === "true" && Boolean(trip.Travel)) ||
+            (selectedTravel === "false" && !Boolean(trip.Travel));
           return (
             likesInRange &&
             isSelectedDrink &&
             isSelectedEat &&
             isSelectedSleep &&
-            isSelectedEnjoy
+            isSelectedEnjoy &&
+            isSelectedTravel
           );
         });
         setFilteredTrips(allfilteredTrips);
@@ -111,6 +121,7 @@ const ItinerairesPage = ({
     selectedDrink,
     selectedEat,
     selectedSleep,
+    selectedTravel,
     selectedEnjoy,
     likesNumberMin,
     likesNumberMax,
@@ -148,6 +159,12 @@ const ItinerairesPage = ({
           <option value="true">Oui</option>
           <option value="false">Non</option>
         </select>
+        <label><LocalBarIcon sx={{ color: blue[500], padding: "2px" }} />Travel : </label>
+        <select onChange={(e) => setSelectedTravel(e.target.value)}>
+          <option value=""></option>
+          <option value="true">Oui</option>
+          <option value="false">Non</option>
+        </select>
         <label><SportsBasketballIcon sx={{ color: orange[500], padding: "2px" }} />Enjoy : </label>
         <select onChange={(e) => setSelectedEnjoy(e.target.value)}>
           <option value=""></option>
@@ -172,6 +189,7 @@ const ItinerairesPage = ({
                   key={trip.Id}
                   adresse={trip.Adresse}
                   Drink={trip.Drink}
+                  Travel={trip.Travel}
                   Eat={trip.Eat}
                   Sleep={trip.Sleep}
                   Enjoy={trip.Enjoy}

@@ -20,18 +20,6 @@ export class ParcoursSauvegarderService {
   ) {}
 
   async create(parcoursSauvegarder: any): Promise<Trip[]> {
-    const { Id } = parcoursSauvegarder;
-    console.log(Trip);
-    const u = await this.parcourssauvegarderRepository.findOneBy({ Id });
-    if (u) {
-      throw new HttpException(
-        {
-          message: 'Input data validation failed',
-          error: 'name must be unique.',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
     return await this.parcourssauvegarderRepository.save(parcoursSauvegarder);
   }
 
@@ -56,17 +44,11 @@ export class ParcoursSauvegarderService {
   
     if (userId) {
       const userLikes = await this.likeRepository.createQueryBuilder('like').leftJoinAndSelect('like.user', 'user').leftJoinAndSelect('like.trip', 'trip').where('user.Id = :userId', { userId }).getMany();;
-  
-      console.log("publicTrips : ", publicTrips)
-      console.log("userLikes : ", userLikes)
       publicTrips = publicTrips.map(trip => ({
         ...trip,
         isLiked: !!userLikes.find(like => like.trip ? like.trip.Id === trip.Id : false),
       }));
-    }
-  
-    console.log(publicTrips); // Log the publicTrips array before returning it
-  
+    }  
     return publicTrips;
   }
 
